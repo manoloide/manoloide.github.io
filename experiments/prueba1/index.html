@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Prueba 1</title>
+		<title>Manoloide - Prueba 1</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
@@ -142,7 +142,7 @@
 				var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, side: THREE.DoubleSide});
 				for(var i = 0; i < 100; i++){
 					var dis = Math.random()*2+0.01;
-					var t = 0.2/Math.max(Math.pow(dis,3), 1);
+					var t = (0.2/Math.max(Math.pow(dis,3), 1))*(0.8+Math.random()*0.4);
 					//var cubeGeometry = new THREE.BoxGeometry(t, t, t);
 					var cubeGeometry = generationMesh(t*0.8, t, t*0.8);
 					var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
