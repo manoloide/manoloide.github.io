@@ -29,10 +29,12 @@
 			
 			var scene, renderer, camera, composer;
 
-			var controls;
+			var controls, clock;
 
 			var spotLight, ambientLight;
 			var cubes;
+
+			var changeTime = 0;
 
 			init();
 			render();
@@ -54,46 +56,58 @@
 				controls = new THREE.OrbitControls( camera );
 				controls.update();
 
+				clock = new THREE.Clock();
+
 				spotLight = new THREE.SpotLight(0xffffff);
 				spotLight.position.set(10, 20, 20);
 				scene.add(spotLight);
 				ambientLight = new THREE.AmbientLight(0x111111);
 				scene.add( ambientLight );
 
+/*
 				composer = new THREE.EffectComposer( renderer );
 				composer.addPass( new THREE.RenderPass( scene, camera ) );
 
-/*
 				var effectCopy = new THREE.ShaderPass(THREE.CopyShader);
 				effectCopy.renderToScreen = true;
 				composer.addPass( effectCopy );
-*/
+
 				var vignette = new THREE.ShaderPass( THREE.VignetteShader );
 				vignette.uniforms[ 'opacity' ].value = 4;
 				vignette.renderToScreen = true;
 				composer.addPass( vignette );
-
+**/
 				window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener( 'keypress', createCubes, false );
 
-				createdCubes();
+				createCubes();
 			}
 
 			function render() {
 				requestAnimationFrame( render );
-				camera.lookAt(new THREE.Vector3(0, 0, 1));
+				var deltaTime = clock.getDelta();
+				camera.position.x += deltaTime*0.1;
+				changeTime -= deltaTime;
+				if(Math.random() < 0.005 && changeTime < 0){
+					randomCamera();
+					changeTime = 1;	
+				}
+				camera.lookAt(new THREE.Vector3(0, 0, 0));
+				 
 				for(var i = 0; i < cubes.length; i++){
 					var cube = cubes[i];
+					/*
 					cube.position.x += Math.random()*0.001-0.0005;
 					cube.position.y += Math.random()*0.001-0.0005;
 					cube.position.z += Math.random()*0.001-0.0005;
-
+					*/
 					cube.rotation.x += Math.random()*0.002-0.001;
 					cube.rotation.y += Math.random()*0.002-0.001;
 					cube.rotation.z += Math.random()*0.002-0.001;
 				}
 
-				composer.render();
-				//renderer.render(scene, camera);
+				//composer.render();
+				renderer.render(scene, camera);
 			};
 
 			function onWindowResize(){
@@ -103,17 +117,20 @@
 			}
 
 			function removeCubes(){
-
+				if(cubes == null) return;
+				for(var i = 0; i < cubes.length; i++){
+					scene.remove(cubes[i]);
+				}
 			}
 
-			function createdCubes(){
-
+			function createCubes(){
+				removeCubes();
 				cubes = new Array();
 				for(var i = 0; i < 100; i++){
 					var dis = Math.random()*2;
-					var t = 0.1/Math.max(Math.pow(dis,3), 1);
+					var t = 0.2/Math.max(Math.pow(dis,3), 1);
 					var cubeGeometry = new THREE.BoxGeometry(t, t, t);
-					var cubeMaterial = new THREE.MeshLambertMaterial({color:  0xffffff});
+					var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
 					var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 					var a1 = Math.random()*2*Math.PI;
 					var a2 = Math.random()*2*Math.PI;
@@ -127,6 +144,15 @@
 					scene.add(cube);
 					cubes.push(cube);
 				}
+			}
+
+			function randomCamera(){
+				var dis = 1.5+Math.random()*4;
+				var a1 = Math.random()*2*Math.PI;
+				var a2 = Math.random()*2*Math.PI;
+				camera.position.x = Math.cos(a1)*Math.cos(a2)*dis;
+				camera.position.y = Math.sin(a1)*Math.cos(a2)*dis;
+				camera.position.z = Math.sin(a2)*dis;
 			}
 
 		</script>
