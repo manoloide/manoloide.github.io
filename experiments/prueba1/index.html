@@ -15,64 +15,118 @@
 		</style>
 	</head>
 	<body>
-		<script src="../../three.min.js"></script>
+		<script src="../three.min.js"></script>
 		<script src="OrbitControls.js"></script>
-		<script>
-			var scene = new THREE.Scene();
-			scene.fog = new THREE.FogExp2(0x1A141D, 0.3);
 
-			var renderer = new THREE.WebGLRenderer({ antialias: true });
-			renderer.setClearColor( scene.fog.color );
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			renderer.shadowMapEnabled = true;
-			document.body.appendChild( renderer.domElement );
- 
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-			camera.position.z = 3;
+		<script src="../shaders/CopyShader.js"></script>
+		<script src="../shaders/VignetteShader.js"></script>
+		<script src="../postprocessing/EffectComposer.js"></script>
+		<script src="../postprocessing/RenderPass.js"></script>
+		<script src="../postprocessing/MaskPass.js"></script>
+		<script src="../postprocessing/ShaderPass.js"></script>
+
+		<script>
+			
+			var scene, renderer, camera, composer;
 
 			var controls;
-			controls = new THREE.OrbitControls( camera );
-			controls.update();
 
+			var spotLight, ambientLight;
+			var cubes;
 
-			var spotLight = new THREE.SpotLight(0xffffff);
-			spotLight.position.set(10, 20, 20);
-			spotLight.castShadow = true;
-			scene.add(spotLight);
-			var light = new THREE.AmbientLight(0x111111);
-			scene.add( light );
-
-			var cubes = new Array();
-			for(var i = 0; i < 100; i++){
-				var dis = Math.random()*2;
-				var t = 0.1/Math.max(Math.pow(dis,3), 1);
-				var cubeGeometry = new THREE.BoxGeometry(t, t, t);
-				var cubeMaterial = new THREE.MeshLambertMaterial({color:  0xffffff});
-				var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-				var a1 = Math.random()*2*Math.PI;
-				var a2 = Math.random()*2*Math.PI;
-				cube.position.x = Math.cos(a1)*Math.sin(a2)*dis;
-				cube.position.y = Math.sin(a1)*Math.sin(a2)*dis;
-				cube.position.z = Math.cos(a2)*dis;
-				cube.rotation.x = Math.random()*2*Math.PI;
-				cube.rotation.y = Math.random()*2*Math.PI;
-				cube.rotation.z = Math.random()*2*Math.PI;
-				cube.castShadow = true;
-				scene.add(cube);
-			}
-
-			var render = function () {
-				requestAnimationFrame( render );
-				renderer.render(scene, camera);
-			};
-
+			init();
 			render();
 
-			window.addEventListener( 'resize', onWindowResize, false );
+			function init(){
+
+				scene = new THREE.Scene();
+				scene.fog = new THREE.FogExp2(0x1A141D, 0.3);
+
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+            	renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setClearColor( scene.fog.color );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+				camera.position.z = 3;
+
+				controls = new THREE.OrbitControls( camera );
+				controls.update();
+
+				spotLight = new THREE.SpotLight(0xffffff);
+				spotLight.position.set(10, 20, 20);
+				scene.add(spotLight);
+				ambientLight = new THREE.AmbientLight(0x111111);
+				scene.add( ambientLight );
+
+				composer = new THREE.EffectComposer( renderer );
+				composer.addPass( new THREE.RenderPass( scene, camera ) );
+
+/*
+				var effectCopy = new THREE.ShaderPass(THREE.CopyShader);
+				effectCopy.renderToScreen = true;
+				composer.addPass( effectCopy );
+*/
+				var vignette = new THREE.ShaderPass( THREE.VignetteShader );
+				vignette.uniforms[ 'opacity' ].value = 4;
+				vignette.renderToScreen = true;
+				composer.addPass( vignette );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				createdCubes();
+			}
+
+			function render() {
+				requestAnimationFrame( render );
+				camera.lookAt(new THREE.Vector3(0, 0, 1));
+				for(var i = 0; i < cubes.length; i++){
+					var cube = cubes[i];
+					cube.position.x += Math.random()*0.001-0.0005;
+					cube.position.y += Math.random()*0.001-0.0005;
+					cube.position.z += Math.random()*0.001-0.0005;
+
+					cube.rotation.x += Math.random()*0.002-0.001;
+					cube.rotation.y += Math.random()*0.002-0.001;
+					cube.rotation.z += Math.random()*0.002-0.001;
+				}
+
+				composer.render();
+				//renderer.render(scene, camera);
+			};
+
 			function onWindowResize(){
 			    camera.aspect = window.innerWidth / window.innerHeight;
 			    camera.updateProjectionMatrix();
 			    renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			function removeCubes(){
+
+			}
+
+			function createdCubes(){
+
+				cubes = new Array();
+				for(var i = 0; i < 100; i++){
+					var dis = Math.random()*2;
+					var t = 0.1/Math.max(Math.pow(dis,3), 1);
+					var cubeGeometry = new THREE.BoxGeometry(t, t, t);
+					var cubeMaterial = new THREE.MeshLambertMaterial({color:  0xffffff});
+					var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+					var a1 = Math.random()*2*Math.PI;
+					var a2 = Math.random()*2*Math.PI;
+					cube.position.x = Math.cos(a1)*Math.cos(a2)*dis;
+					cube.position.y = Math.sin(a1)*Math.cos(a2)*dis;
+					cube.position.z = Math.sin(a2)*dis;
+					cube.rotation.x = Math.random()*2*Math.PI;
+					cube.rotation.y = Math.random()*2*Math.PI;
+					cube.rotation.z = Math.random()*2*Math.PI;
+					cube.castShadow = true;
+					scene.add(cube);
+					cubes.push(cube);
+				}
 			}
 
 		</script>
