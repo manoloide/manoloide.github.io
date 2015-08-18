@@ -3,7 +3,7 @@
 	<head>
 		<title>Manoloide</title>
 		<style>
-			body { margin: 0; background-color: #000;}
+			body { margin: 0; background-color: #000; overflow:hidden;}
 			p { font-family: "Lucida Console", Monaco, monospace; color: #00ff00;}
 		</style>
 	</head>
@@ -11,16 +11,32 @@
 		<p id="code"></p>
 		<script>
 		var text = "c://";
-		var newText = "Hola Tom!";
+		var newText = "Run          ";
 		var code = document.getElementById("code");
 		code.innerText = text;
-
-		setInterval(loop, 80); // 33 milliseconds = ~ 30 frames per sec
+		var clear = false;
+		setInterval(loop, 100); // 33 milliseconds = ~ 30 frames per sec
 		function loop() {
 		    if(newText.length > 0){
 		    	text += newText.charAt(0);
 		    	newText = newText.substring(1);
 		    	code.innerText = text;
+		    }else {
+		    	if(clear){
+			    	text = "c://";
+			    	newText = "Run      ";
+			    	clear = false;
+			    }else {
+			    	if(code.clientHeight > window.innerHeight-120){
+			    		clear = true;
+			    		text += "\nc://";
+			    		newText = "clear";
+			    	}
+			    	else {
+				    	text += "\nError\nc://";
+				    	newText = "Run      ";
+				    }
+				}
 		    }
 		}
 
