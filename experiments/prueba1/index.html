@@ -73,6 +73,12 @@
 				window.addEventListener( 'keypress', createCubes, false );
 
 				createCubes();
+				/*
+				var music = new Audio('sounds/music.wav'); 
+				music.loop = true;
+				music.play();
+				*/
+				//document.body.appendChild(music);​
 			}
 
 			function render() {
@@ -115,14 +121,16 @@
 				}
 			}
 
+
 			function createCubes(){
 				removeCubes();
 				cubes = new Array();
+				var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, side: THREE.DoubleSide});
 				for(var i = 0; i < 100; i++){
 					var dis = Math.random()*2;
 					var t = 0.2/Math.max(Math.pow(dis,3), 1);
-					var cubeGeometry = new THREE.BoxGeometry(t, t, t);
-					var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+					//var cubeGeometry = new THREE.BoxGeometry(t, t, t);
+					var cubeGeometry = generationMesh(t*0.8, t, t*0.8);
 					var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 					var a1 = Math.random()*2*Math.PI;
 					var a2 = Math.random()*2*Math.PI;
@@ -136,6 +144,38 @@
 					scene.add(cube);
 					cubes.push(cube);
 				}
+			}
+
+			function generationMesh(w, h, d){
+
+				var geom = new THREE.Geometry(); 
+				var v1 = new THREE.Vector3(0,h/2,0);
+				var v2 = new THREE.Vector3(-w/2,0,0);
+				var v3 = new THREE.Vector3(0,0,-d/2);
+				var v4 = new THREE.Vector3(w/2,0,0);
+				var v5 = new THREE.Vector3(0,0,d/2);
+				var v6 = new THREE.Vector3(0,-h/2,0);
+
+				geom.vertices.push(v1);
+				geom.vertices.push(v2);
+				geom.vertices.push(v3);
+				geom.vertices.push(v4);
+				geom.vertices.push(v5);
+				geom.vertices.push(v6);
+
+				geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
+				geom.faces.push( new THREE.Face3( 0, 2, 3 ) );
+				geom.faces.push( new THREE.Face3( 0, 3, 4 ) );
+				geom.faces.push( new THREE.Face3( 0, 4, 1 ) );
+				geom.faces.push( new THREE.Face3( 5, 1, 2 ) );
+				geom.faces.push( new THREE.Face3( 5, 2, 3 ) );
+				geom.faces.push( new THREE.Face3( 5, 3, 4 ) );
+				geom.faces.push( new THREE.Face3( 5, 4, 1 ) );
+
+				geom.computeFaceNormals();
+				//geom.computeVertexNormals();
+
+				return geom;
 			}
 
 			function randomCamera(){
