@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<title>Manoloide - LineRect</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="../three.min.js"></script>
+
+		<script>
+			
+			var scene, renderer, camera;
+			var clock, deltaTime;
+
+			var spotLight, ambientLight;
+			var objects;
+
+			// Define the Person constructor
+			var LineRect = function() {
+				this.x = 0;
+				this.y = 0;
+				this.z = 0;
+				this.a1 = Math.random()*Math.PI*2;
+				this.a2 = Math.random()*Math.PI*2;
+				this.vel = 0.01;
+
+			  	this.material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+			  	this.geom = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+				this.mesh = new THREE.Mesh(this.geom, this.material);
+				scene.add(this.mesh);
+			};
+
+			LineRect.prototype.update = function(){
+				this.a1 += Math.random()*0.08-0.04;
+				this.a2 += Math.random()*0.08-0.04;
+				this.x += Math.cos(this.a1)*Math.cos(this.a2)*this.vel;
+				this.y += Math.cos(this.a1)*Math.sin(this.a2)*this.vel;
+				this.z += Math.sin(this.a1)*this.vel;
+
+				this.mesh.position.setX(this.x);
+				this.mesh.position.setY(this.y);
+				this.mesh.position.setZ(this.z);
+				console.log("pos: " + this.mesh.position);
+			};
+
+			LineRect.prototype.updateMesh = function(){
+			  console.log("Hello, I'm " + this.firstName);
+			};
+
+			init();
+			render();
+
+			function init(){
+
+				scene = new THREE.Scene();
+				scene.fog = new THREE.FogExp2(0xFFFFFF, 0.034);
+
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+            	renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setClearColor( scene.fog.color );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+				camera.position.z = 3;
+
+				clock = new THREE.Clock();
+
+				spotLight = new THREE.SpotLight(0xFFFFFF);
+				spotLight.position.set(10, 20, 20);
+				scene.add(spotLight);
+				ambientLight = new THREE.AmbientLight(0x121212);
+				scene.add( ambientLight );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+				//window.addEventListener( 'keypress', createCubes, false );
+				objects = new Array();
+				var line = new LineRect();
+				objects.push(line);
+
+				var line2 = new LineRect();
+				objects.push(line2);
+
+				var line3 = new LineRect();
+				objects.push(line3);
+
+			}
+
+			function render() {
+				requestAnimationFrame( render );
+				deltaTime = clock.getDelta();
+				//camera.position.x += deltaTime*0.1;
+				camera.lookAt(new THREE.Vector3(0, 0, 0));
+				 
+				for(var i = 0; i < objects.length; i++){
+					var obj = objects[i];
+					obj.update();
+				}
+
+				renderer.render(scene, camera);
+			};
+
+			function onWindowResize(){
+			    camera.aspect = window.innerWidth / window.innerHeight;
+			    camera.updateProjectionMatrix();
+			    renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+
+
+		</script>
+	</body>
+</html>
