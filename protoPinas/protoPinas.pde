@@ -33,7 +33,7 @@ void draw() {
   } else if (state.equals("gameover")) {
     updateGameOver();
   }
-
+  
   keyClick = false;
 }
 
@@ -95,6 +95,7 @@ void updateGameOver() {
   text("GAME OVER", width/2, height/2);
 }
 
+
 void keyPressed() {
   keyClick = true;
   if (keyCode == UP || key == 'w') player.up = true; 
@@ -104,6 +105,12 @@ void keyPressed() {
 void keyReleased() {
   if (keyCode == UP || key == 'w') player.up = false; 
   if (keyCode == DOWN || key == 's') player.down = false;
+}
+
+void mousePressed() {
+  keyClick = true;
+  if (mouseY+player.h/2 < player.y) player.up = true; 
+  if (mouseY-player.h/2 > player.y) player.down = true;
 }
 
 class Player {
