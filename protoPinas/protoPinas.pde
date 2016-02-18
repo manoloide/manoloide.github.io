@@ -7,7 +7,7 @@ Player player;
 String state;
 
 void setup() {
-  size(800, 600); 
+  size(800, 500); 
   state = "menu";
   reset();
 
@@ -182,7 +182,7 @@ class Tiburon extends Objeto {
   }
   void show() {
     fill(160);
-    arc(x, y, w, h, PI, PI*1.6);
+    arc(x+w/2, y+h/2, w*2, h*2, PI, PI*1.6);
   }  
   void collision() {
     gameOver = true;
@@ -215,5 +215,4 @@ boolean rectCollision(float x1, float y1, float w1, float h1, float x2, float y2
   float dy = abs(y1-y2);
   return dx < (w1+w2)/2 && dy < (h1+h2)/2;
 }
-
 
