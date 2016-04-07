@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Poligonos</title>
+
+	<style>
+		body {
+			background-color:lightgrey;
+			margin: 0;
+			overflow: hidden;
+		}
+	</style>
+
+	<script type="text/javascript" src="dat.gui.min.js"></script>
+	<script type="text/javascript">
+		var canvas, ctx;
+		var width, height;
+		function init(){
+			canvas = document.createElement('canvas');
+			ctx = canvas.getContext("2d");
+			width = canvas.width = window.innerWidth;;
+			height = canvas.height = window.innerHeight;
+			document.body.appendChild(canvas);
+
+			createGUI();
+			generate();
+		}
+
+		function generate(){
+
+			ctx.fillStyle = "white";
+			ctx.fillRect(0, 0, width, height);
+
+			ctx.strokeStyle = 'rgba(0 , 0, 0, 0.2)';
+			ctx.lineWidth = 0.8;
+
+			/*
+			line(0, 0, width, height);
+			line(width, 0, 0, height);
+			*/
+
+			ctx.strokeStyle = 'rgba(0, 0, 0, '+values.transparencia+')';
+
+			var cx = width/2.;
+			var cy = height/2.;
+			var l = values.lados;
+			var d = Math.min(width, height)*0.8;
+			var r = d*0.5;
+			var a = Math.PI-getAnguloRad(l);
+			var x1, y1, x2, y2;
+			var ang = 0.;
+			for(var i = 0; i < values.iteraciones; i++){
+				x1 = cx+Math.cos(ang)*r;
+				y1 = cy+Math.sin(ang)*r;
+				ang += a;
+				x2 = cx+Math.cos(ang)*r;
+				y2 = cy+Math.sin(ang)*r;
+				line(x1, y1, x2, y2);
+			}
+
+		}
+
+		function getAnguloRad(l){
+			return (Math.PI*(l-2))/l;
+		}
+
+		function getAngulo(l){
+			return (180*(l-2))/l;
+		}
+
+		function line(x1, y1, x2, y2){
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x2, y2);
+			ctx.stroke();
+			ctx.closePath();
+		}
+
+		var FizzyText = function() {
+			this.lados = 8;
+			this.numerador  = 8;
+			this.denominador = 1;
+			this.angulo = 90;
+			this.iteraciones = 60;
+
+			this.transparencia = 0.2;
+			this.randomFracionario = function() { 
+				this.numerador  = 1+parseInt(Math.random()*99);
+				this.denominador = 1+parseInt(Math.random()*99);
+				this.lados = this.numerador/this.denominador;
+				this.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate() 
+			};
+			this.random = function() { 
+				this.lados = Math.random()*50;
+				this.numerador  = this.lados;
+				this.denominador = 1;
+				this.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate() 
+			};
+			this.randomChiquito = function() { 
+				this.lados = Math.random()*7;
+				this.numerador  = this.lados;
+				this.denominador = 1;
+				this.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate() 
+			};
+			this.LadoPI = function() { 
+				this.numerador  = Math.PI;
+				this.denominador = 1;
+				this.lados = this.numerador/this.denominador;
+				this.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate() 
+			};
+			this.generar = function() { generate() };
+		};
+
+		var values, gui;
+
+		window.onload = function() {
+			init();
+		};
+
+		function createGUI(){
+
+			values = new FizzyText();
+			gui = new dat.GUI();
+			var glados = gui.add(values, 'lados', 0, 100);
+			var	gangulo = gui.add(values, 'angulo', 0.1, 180);
+			var gnumerador = gui.add(values, 'numerador', 1, 100);
+			var gdenominador = gui.add(values, 'denominador', 1, 100);
+			var giteraciones = gui.add(values, 'iteraciones', 4, 8000);
+			var gtransparencia = gui.add(values, 'transparencia', 0, 1);
+
+			gui.add(values, 'LadoPI');
+			gui.add(values, 'randomFracionario');
+			gui.add(values, 'randomChiquito');
+			gui.add(values, 'random');
+			gui.add(values, 'generar');
+
+			glados.onChange(function(value) {
+				values.numerador = values.lados;
+				values.denominador = 1;
+				values.angulo = getAngulo(values.lados);
+				updateDisplay();
+			});
+
+			glados.onFinishChange(function(value) {
+				values.numerador = values.lados;
+				values.denominador = 1;
+				values.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate();
+			});
+
+			gnumerador.onChange(function(value) {
+				values.lados = values.numerador/values.denominador;
+				updateDisplay();
+			});
+
+			gangulo.onFinishChange(function(value) {
+				if(value != 180) values.lados = -360/(value-180);
+				else values.lados = 2;
+				values.numerador = values.lados;
+				values.denominador = 1;
+				updateDisplay();
+				generate();
+			});
+
+			gangulo.onChange(function(value) {
+				if(value != 180) values.lados = -360/(value-180);
+				else values.lados = 2;
+				values.numerador = values.lados;
+				values.denominador = 1;
+				updateDisplay();
+			});
+
+			gnumerador.onFinishChange(function(value) {
+				values.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate();
+			});
+
+			gdenominador.onChange(function(value) {
+				values.lados = values.numerador/values.denominador;
+				updateDisplay();
+			});
+
+			gdenominador.onFinishChange(function(value) {
+				values.angulo = getAngulo(values.lados);
+				updateDisplay();
+				generate();
+			});
+
+			giteraciones.onFinishChange(function(value) {
+				updateDisplay();
+				generate();
+			});
+
+			gtransparencia.onFinishChange(function(value) {
+				updateDisplay();
+				generate();
+			});
+
+		}
+
+		function updateDisplay() {
+		    for (var i in gui.__controllers) {
+		        gui.__controllers[i].updateDisplay();
+		    }
+		    for (var f in gui.__folders) {
+		        updateDisplay(gui.__folders[f]);
+		    }
+		}
+	</script>
+</head>
+<body>
+</body>
+</html>
