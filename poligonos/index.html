@@ -116,7 +116,6 @@
 				updateDisplay();
 				generate() 
 			};
-			this.generar = function() { generate() };
 		};
 
 		var values, gui;
@@ -140,7 +139,6 @@
 			gui.add(values, 'randomFracionario');
 			gui.add(values, 'randomChiquito');
 			gui.add(values, 'random');
-			gui.add(values, 'generar');
 
 			glados.onChange(function(value) {
 				values.numerador = values.lados;
