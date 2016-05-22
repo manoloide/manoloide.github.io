@@ -26,6 +26,7 @@ function scroll(e) {
 	//delta = (e.wheelDelta || -e.detail);
 	//amountScroll += delta;
 	//if(Math.abs(amountScroll) >= 1){
+	delta = (e.detail<0 || e.wheelDelta>0) ? 1 : -1;
 	changeDiv((delta > 0)? 1 : -1);
 	//}
 };
@@ -68,7 +69,7 @@ function changeDiv(delta){
 			if(Math.abs(newPos-actPos) > 2){
 				setTimeout(function(){ move(newPos)}, 40);
 			}else {
-				setTimeout(function(){ activeScroll = true;}, 100);
+				setTimeout(function(){ activeScroll = true;}, 50);
 				divs[scrollPos].scrollIntoView(true);
 			}
 		}
