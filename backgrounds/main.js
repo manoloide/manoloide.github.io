@@ -62,13 +62,13 @@ function changeDiv(delta){
 		move(scrollPos*window.innerHeight);
 		function move(newPos){
 			var actPos = window.pageYOffset;
-			var des = actPos+(newPos-actPos)*0.5;
+			var des = Math.min(100, (newPos-actPos)*0.5);
 			des = (des < 0)? -Math.max(1, Math.ceil(Math.abs(des))) : Math.max(1, Math.ceil(des));
-			window.scrollTo(0, des);
+			window.scrollTo(0, actPos+des);
 			if(Math.abs(newPos-actPos) > 2){
 				setTimeout(function(){ move(newPos)}, 40);
 			}else {
-				setTimeout(function(){ activeScroll = true;}, 200);
+				setTimeout(function(){ activeScroll = true;}, 100);
 				divs[scrollPos].scrollIntoView(true);
 			}
 		}
