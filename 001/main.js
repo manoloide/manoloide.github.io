@@ -71,8 +71,6 @@ function generateDiv() {
 		quad.style.height = "10px";
 		quad.style.float = "left";
 		quad.style.backgroundColor = pal[i];
-		quad.setAttribute("animation-name", "inForm");
-		quad.setAttribute("animation-duration", "1s");
 		divPallet.appendChild(quad);
 	}
 	div.appendChild(divPallet);
@@ -102,7 +100,7 @@ function generateDiv() {
 	svg.setAttribute("width", "100%");
 	svg.setAttribute("height", "100%");
 
-	var c = parseInt(12+Math.random()*90*Math.random());
+	var c = parseInt(18+Math.random()*80*Math.random()+30*Math.random());
 	var maxSize = (width+height)/6;
 	var elems = [];
 	for(var i = 0; i < c; i++) {
