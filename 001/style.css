@@ -18,3 +18,8 @@ html, body {
 .pallet {
 	position: fixed;
 }
+
+@keyframes inForm {
+    from {transform: translate(0, 200);}
+    to {transform: translate(0, 0);}
+}

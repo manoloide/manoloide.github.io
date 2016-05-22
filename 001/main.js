@@ -33,6 +33,14 @@ function scroll(e) {
 		divs[scrollPos].scrollIntoView(true);
 		//scrollTo(sections, scrollPos*window.innerHeight, 0.5); 
 
+		var elems = divs[scrollPos].getElementsByTagName("circle");
+		for(var i = 0; i < elems.length; i++) {
+			ele = elems[i];
+			ele.setAttribute("animation-name", "inForm");
+			ele.setAttribute("animation-duration", "1s");
+		}
+
+
 		activeScroll = false;
 		setTimeout(function(){ activeScroll = true}, 300);
 	}
@@ -63,6 +71,8 @@ function generateDiv() {
 		quad.style.height = "10px";
 		quad.style.float = "left";
 		quad.style.backgroundColor = pal[i];
+		quad.setAttribute("animation-name", "inForm");
+		quad.setAttribute("animation-duration", "1s");
 		divPallet.appendChild(quad);
 	}
 	div.appendChild(divPallet);
@@ -92,20 +102,23 @@ function generateDiv() {
 	svg.setAttribute("width", "100%");
 	svg.setAttribute("height", "100%");
 
-	var c = parseInt(12+Math.random()*50);
+	var c = parseInt(12+Math.random()*90*Math.random());
+	var maxSize = (width+height)/6;
+	var elems = [];
 	for(var i = 0; i < c; i++) {
 		var ele;
 		var col = pal[parseInt(pal.length*Math.random())];
 		var xx = parseInt(Math.random()*width);
 		var yy = parseInt(Math.random()*height);
-		var rr = parseInt(200*Math.random()*Math.random());
-		var rnd = parseInt(Math.random()*4);
+		var rr = parseInt(maxSize*Math.random()*Math.random()*(Math.random()*0.5+0.5));
+		var rnd = parseInt(Math.random()*4.7);
 		if(rnd == 0) {
 			ele = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 			ele.setAttribute("fill", col);
 			ele.setAttribute("cx", xx+"px");
 			ele.setAttribute("cy", yy+"px");
 			ele.setAttribute("r", rr+"px");
+			elems.push(ele);
 		}
 		else if(rnd == 1) {
 			var amp = 0.2+Math.random()*0.3;
@@ -122,7 +135,8 @@ function generateDiv() {
 			bor.setAttribute("cx", xx+"px");
 			bor.setAttribute("cy", yy+"px");
 			bor.setAttribute("r", rr+"px");
-			svg.appendChild(bor);
+			elems.push(bor);
+			elems.push(ele);
 		}
 		else if(rnd == 2) {
 			var rr = rr*0.5;
@@ -138,6 +152,7 @@ function generateDiv() {
 			ele = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 			ele.setAttribute("fill", col);
 			ele.setAttribute("points", points);
+			elems.push(ele);
 		}
 		else if(rnd == 3) {
 			var rr = rr*0.5;
@@ -161,8 +176,33 @@ function generateDiv() {
 			ele = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 			ele.setAttribute("fill", col);
 			ele.setAttribute("points", points);
+			elems.push(ele);
+		}else if(rnd == 4){
+			var w = rr*2;
+			var h = w*(0.1+Math.random()*0.2*Math.random());
+			var cc = parseInt(8+Math.random()*20);
+			var dx = w/cc;
+			var ww = (w/cc)*(0.3+Math.random()*0.6);
+			for(var j = 0; j < cc; j++) {
+				var ele = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+				ele.setAttribute("fill", col);
+				ele.setAttribute("x", xx-w/2+dx*j+"px");
+				ele.setAttribute("y", yy-h/2+"px");
+				ele.setAttribute("width", ww+"px");
+				ele.setAttribute("height", h+"px");
+				elems.push(ele);
+			}
 		}
+	}
 
+	var ele;
+	for(var i = 0; i < elems.length; i++) {
+		ele = elems[i];
+		/*
+		ele.setAttribute("transform", "translate(0, "+height+")");
+		ele.setAttribute("transition", "transform 10s");
+		ele.style.transform = "translate(0, 0)";
+		*/
 		svg.appendChild(ele);
 	}
 
@@ -206,7 +246,7 @@ function randPalete() {
 	var cc = parseInt(2+Math.random()*3);
 	var des = (1./cc);
 	var ini = Math.random();
-	var h, s, col;
+	var h, s, v, col;
 	for(var i = 0; i < cc; i++){
 		h = ((i*des)+ini)%1;
 		s = 0.74+Math.random()*0.21;
