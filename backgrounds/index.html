@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Landing 001</title>
+	<title>Backgrounds</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="main.js"></script>
 </head>
 <body>
 	<div id="sections">
 	</div>
-	<div class="border">
+	<div id="infoContent" class="border">
 		<div id="info">
 			<div style="font-size: 60px; margin-top: 50px;">Generative</div>
 			<div style="font-size: 36px; margin-top: 0px;">Backgrounds</div>
 			<div style="font-size: 14px; margin-top: 50px;">(scroll to generate)</div>
 		</div>
 	</div>
-	<div>UP</div>
-	<div>DOWN</div>
+	<img class="arrow hidden" id="arrowUp"onclick="next()" src="svgs/arrow.svg">
+	<img class="arrow" id="arrowDown" onclick="prev()" src="svgs/arrow.svg">
 </body>
 </html>

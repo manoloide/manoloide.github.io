@@ -1,5 +1,6 @@
 window.onload = function() {
-	generateDiv();
+	var firstDiv = generateDiv();
+	//firstDiv.appendChild(document.getElementById('infoContent'));
 	initScroll();
 }
 
@@ -16,13 +17,40 @@ function initScroll() {
 
 var activeScroll = true;
 var scrollPos = 0;
+var amountScroll = 0;
 
 function scroll(e) {
 	var e = window.event || e;
+	e.preventDefault();
 	var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+	delta = (e.wheelDelta || -e.detail);
+	amountScroll += delta;
+	if(Math.abs(amountScroll) > 6){
+		changeDiv((amountScroll > 0)? 1 : -1);
+	}
+};
+
+function next() {
+	changeDiv(1);
+}
+
+function prev() {
+	changeDiv(-1);
+}
+
+function changeDiv(delta){
 	if(activeScroll) {
+		activeScroll = false;
+		amountScroll = 0;
+
+		scrollPos = parseInt(window.pageYOffset/window.innerHeight);
 		scrollPos -= delta;
-		if(scrollPos < 0) scrollPos = 0;
+		if(scrollPos <= 0){
+			scrollPos = 0;
+			document.getElementById("arrowUp").classList.add("hidden");
+		} else {
+			document.getElementById("arrowUp").classList.remove("hidden");
+		}
 		var sections = document.getElementById("sections");
 		var divs = sections.getElementsByClassName('section');
 		if(divs.length <= scrollPos) {
@@ -30,21 +58,22 @@ function scroll(e) {
 			divs = sections.getElementsByClassName('section');
 		}
 
-		divs[scrollPos].scrollIntoView(true);
-		//scrollTo(sections, scrollPos*window.innerHeight, 0.5); 
-
-		var elems = divs[scrollPos].getElementsByTagName("circle");
-		for(var i = 0; i < elems.length; i++) {
-			ele = elems[i];
-			ele.setAttribute("animation-name", "inForm");
-			ele.setAttribute("animation-duration", "1s");
+		//divs[scrollPos].scrollIntoView(true);
+		move(scrollPos*window.innerHeight);
+		function move(newPos){
+			var actPos = window.pageYOffset;
+			var des = actPos+(newPos-actPos)*0.5;
+			des = (des < 0)? -Math.max(1, Math.ceil(Math.abs(des))) : Math.max(1, Math.ceil(des));
+			window.scrollTo(0, des);
+			if(Math.abs(newPos-actPos) > 2){
+				setTimeout(function(){ move(newPos)}, 40);
+			}else {
+				activeScroll = true;
+				divs[scrollPos].scrollIntoView(true);
+			}
 		}
-
-
-		activeScroll = false;
-		setTimeout(function(){ activeScroll = true}, 300);
 	}
-};
+}
 
 function generateDiv() {
 
