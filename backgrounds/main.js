@@ -67,7 +67,7 @@ function changeDiv(delta){
 			des = (des < 0)? -Math.max(1, Math.ceil(Math.abs(des))) : Math.max(1, Math.ceil(des));
 			window.scrollTo(0, actPos+des);
 			if(Math.abs(newPos-actPos) > 2){
-				setTimeout(function(){ move(newPos)}, 40);
+				setTimeout(function(){ move(newPos)}, 16);
 			}else {
 				setTimeout(function(){ activeScroll = true;}, 50);
 				divs[scrollPos].scrollIntoView(true);
