@@ -26,7 +26,7 @@ function scroll(e) {
 	//delta = (e.wheelDelta || -e.detail);
 	//amountScroll += delta;
 	//if(Math.abs(amountScroll) >= 1){
-		changeDiv((amountScroll > 0)? 1 : -1);
+	changeDiv((delta > 0)? 1 : -1);
 	//}
 };
 
