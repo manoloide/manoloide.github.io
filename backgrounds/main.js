@@ -68,7 +68,7 @@ function changeDiv(delta){
 			if(Math.abs(newPos-actPos) > 2){
 				setTimeout(function(){ move(newPos)}, 40);
 			}else {
-				activeScroll = true;
+				setTimeout(function(){ activeScroll = true;}, 200);
 				divs[scrollPos].scrollIntoView(true);
 			}
 		}
