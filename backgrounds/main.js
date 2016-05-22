@@ -23,11 +23,11 @@ function scroll(e) {
 	var e = window.event || e;
 	e.preventDefault();
 	var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-	delta = (e.wheelDelta || -e.detail);
-	amountScroll += delta;
-	if(Math.abs(amountScroll) > 6){
+	//delta = (e.wheelDelta || -e.detail);
+	//amountScroll += delta;
+	//if(Math.abs(amountScroll) >= 1){
 		changeDiv((amountScroll > 0)? 1 : -1);
-	}
+	//}
 };
 
 function next() {
