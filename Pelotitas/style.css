@@ -1,0 +1,14 @@
+body {
+	margin: 50px;
+	padding: 0;
+	background-color: #5B5EEA;
+	overflow: hidden;
+	font-family: 'Quicksand', sans-serif;
+}
+
+.center {
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 800px;
+}
