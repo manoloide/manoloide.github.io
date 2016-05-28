@@ -9,7 +9,7 @@ function setup() {
 	var canvas = createCanvas(w, h);
 	canvas.class("center");
 
-	levelNum = Levels.length-1;
+	levelNum = 0;
 	level = new Level(Levels[levelNum]);
 
 	title = new Title(level.name, 1);
