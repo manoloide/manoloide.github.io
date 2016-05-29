@@ -24,6 +24,33 @@ var Levels =
 	},
 	{
 		"name": "Level 2",
+		"width": 3,
+		"height": 1,
+		"grid": [
+			[0, 0, 0]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 0
+			},
+			{
+				"color": "#FF1A55",
+				"x": 2,
+				"y": 0
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 1,
+				"y": 0
+			}
+		]
+	},
+	{
+		"name": "Level 3",
 		"width": 2,
 		"height": 5,
 		"grid": [
@@ -59,7 +86,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 3",
+		"name": "Level 4",
 		"width": 4,
 		"height": 3,
 		"grid": [
@@ -93,7 +120,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 4",
+		"name": "Level 5",
 		"width": 3,
 		"height": 4,
 		"grid": [
@@ -128,7 +155,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 5",
+		"name": "Level 6",
 		"width": 3,
 		"height": 4,
 		"grid": [
@@ -163,7 +190,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 6",
+		"name": "Level 7",
 		"width": 4,
 		"height": 7,
 		"grid": [
@@ -201,7 +228,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 7",
+		"name": "Level 8",
 		"width": 6,
 		"height": 3,
 		"grid": [
@@ -235,7 +262,7 @@ var Levels =
 		]
 	},
 	{
-		"name": "Level 8",
+		"name": "Level 9",
 		"width": 3,
 		"height": 6,
 		"grid": [
@@ -278,6 +305,267 @@ var Levels =
 				"color": "#FF1A55",
 				"x": 2,
 				"y": 5
+			}
+		]
+	},
+	{
+		"name": "Level 10",
+		"width": 3,
+		"height": 3,
+		"grid": [
+			[0, 1, 0],
+			[0, 1, 0],
+			[0, 1, 0]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 0
+			},
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 2
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 1
+			}
+		]
+	},
+	{
+		"name": "Level 11",
+		"width": 5,
+		"height": 3,
+		"grid": [
+			[0, 0, 1, 0, 0],
+			[0, 1, 1, 0, 0],
+			[0, 0, 1, 0, 0]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 1,
+				"y": 0
+			},
+			{
+				"color": "#1affc4",
+				"x": 3,
+				"y": 2
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 2
+			},
+			{
+				"color": "#1affc4",
+				"x": 4,
+				"y": 1
+			}
+		]
+	},
+	{
+		"name": "Level 12",
+		"width": 5,
+		"height": 4,
+		"grid": [
+			[0, 0, 0, 0, 0],
+			[0, 1, 0, 1, 0],
+			[0, 1, 0, 1, 0],
+			[0, 0, 0, 0, 0]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 2,
+				"y": 2
+			},
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 1
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 2,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 2
+			}
+		]
+	},
+	{
+		"name": "Level 13",
+		"width": 5,
+		"height": 3,
+		"grid": [
+			[1, 0, 0, 0, 1],
+			[0, 0, 0, 0, 0],
+			[1, 0, 0, 0, 1]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 1,
+				"y": 0
+			},
+			{
+				"color": "#1affc4",
+				"x": 3,
+				"y": 0
+			},
+			{
+				"color": "#FF1A55",
+				"x": 3,
+				"y": 2
+			},
+			{
+				"color": "#1affc4",
+				"x": 1,
+				"y": 2
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 2,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 2
+			}
+		]
+	},
+	{
+		"name": "Level 14",
+		"width": 7,
+		"height": 7,
+		"grid": [
+			[1, 0, 0, 0, 0, 0, 1],
+			[0, 0, 1, 1, 1, 0, 0],
+			[0, 0, 0, 1, 0, 0, 0],
+			[0, 1, 1, 1, 1, 1, 0],
+			[0, 0, 0, 1, 0, 0, 0],
+			[0, 0, 1, 1, 1, 0, 0],
+			[1, 0, 0, 0, 0, 0, 1],
+		],
+		"balls": [
+			{
+				"color": "#1affc4",
+				"x": 2,
+				"y": 2
+			},
+			{
+				"color": "#FF1A55",
+				"x": 2,
+				"y": 4
+			},
+			{
+				"color": "#1affc4",
+				"x": 4,
+				"y": 4
+			},
+			{
+				"color": "#FF1A55",
+				"x": 4,
+				"y": 2
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 1,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 5,
+				"y": 1
+			},
+			{
+				"color": "#FF1A55",
+				"x": 5,
+				"y": 5
+			},
+			{
+				"color": "#1affc4",
+				"x": 1,
+				"y": 5
+			}
+		]
+	},
+	{
+		"name": "Level 15",
+		"width": 5,
+		"height": 5,
+		"grid": [
+			[0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 1],
+			[0, 1, 1, 0, 0],
+			[0, 0, 0, 0, 1],
+			[0, 0, 0, 0, 0]
+		],
+		"balls": [
+			{
+				"color": "#FF1A55",
+				"x": 1,
+				"y": 1
+			},
+			{
+				"color": "#FF1A55",
+				"x": 3,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 1,
+				"y": 3
+			},
+			{
+				"color": "#1affc4",
+				"x": 3,
+				"y": 3
+			}
+		],
+		"goals": [
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 0
+			},
+			{
+				"color": "#FF1A55",
+				"x": 0,
+				"y": 1
+			},
+			{
+				"color": "#1affc4",
+				"x": 0,
+				"y": 3
+			},
+			{
+				"color": "#1affc4",
+				"x": 0,
+				"y": 4
 			}
 		]
 	}

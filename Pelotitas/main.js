@@ -3,6 +3,8 @@ var levelNum;
 var tileSize;
 var title;
 
+var debug = false;
+
 function setup() {
 	var w = window.innerWidth-100;
 	var h = window.innerHeight-100;
@@ -10,8 +12,13 @@ function setup() {
 	canvas.class("center");
 
 	levelNum = 0;
+	if(debug) levelNum = Levels.length-1;
 	level = new Level(Levels[levelNum]);
 
+
+	textFont('Quicksand');
+	textAlign(CENTER, CENTER);
+	textStyle(NORMAL);
 	title = new Title(level.name, 1);
 }
 
@@ -41,6 +48,28 @@ function keyPressed(){
 	if(key  === 'R'){
 		level = new Level(Levels[levelNum]);
 	}
+
+	if(debug){
+		if(key  === 'S'){
+			rndLevel = randomLevel();
+			console.log(rndLevel, JSON.stringify(rndLevel, null, '\t'));
+			level.loadLevel(rndLevel);
+		}	
+
+		if(key  === 'A'){
+			levelNum += Levels.length-1;
+			levelNum %= Levels.length;
+			level = new Level(Levels[levelNum]);
+			title.newTitle(level.name);
+		}
+
+		if(key  === 'D'){
+			levelNum += Levels.length+1;
+			levelNum %= Levels.length;
+			level = new Level(Levels[levelNum]);
+			title.newTitle(level.name);
+		}
+	}
 }
 
 class Level {
@@ -52,15 +81,17 @@ class Level {
 		background("#5B5EEA");
 		translate((width-this.width)/2, (height-this.height)/2);
 		noStroke();
+		stroke("#5B5EEA");
 		fill("#393c95");
 		rect(0, 0, this.width, this.height);
 
-		stroke("#5B5EEA");
+		noStroke();
 		fill("#5B5EEA");
 		for(var i = 0; i < this.grid.length; i++) {
 			for(var j = 0; j < this.grid[0].length; j++) {
 				if(this.grid[i][j] == 1) {
-					rect(i*tileSize, j*tileSize, tileSize, tileSize);
+					//rect(Math.round(i*tileSize-0.5), Math.round(j*tileSize-0.5), Math.ceil(tileSize+0.5), Math.ceil(tileSize+0.5));
+					rect(i*tileSize-0.5, j*tileSize-0.5, tileSize+0.5, tileSize+0.5);
 				}
 			}
 		}
@@ -75,6 +106,7 @@ class Level {
 			this.balls[i].show();
 			if(this.balls[i].remove){
 				this.balls.splice(i--, 1);
+				this.checkWin();
 			}
 		} 
 
@@ -178,6 +210,8 @@ class Level {
 			if(this.goals[i].complet) count++;
 		} 
 
+		if(this.balls.length != this.goals.length) return;
+
 		if(count == this.goals.length) {
 			this.block = true;
 			this.win = true;
@@ -202,7 +236,6 @@ class Ball {
 		this.s = tileSize*0.65;
 		this.remove = false;
 		this.parent = null;
-		textFont('Quicksand');
 	}
 
 	update() {
@@ -212,8 +245,8 @@ class Ball {
 		} else {
 			var dx = this.parent.x-this.x;
 			var dy = this.parent.y-this.y;
-			this.x += (dx)*0.3;
-			this.y += (dy)*0.3;
+			this.x += (dx)*0.35;
+			this.y += (dy)*0.35;
 			if(Math.abs(dx+dy) < 1) this.remove = true;
 		}
 	}
@@ -269,8 +302,8 @@ class Goal {
 			var dx = Math.abs(balls[i].nx-this.x);
 			var dy = Math.abs(balls[i].ny-this.y);
 			if(dx+dy < 2){
-				var cd = red(this.col)-red(balls[i].col)+green(this.col)-green(balls[i].col)+blue(this.col)-blue(balls[i].col);
-				if(Math.abs(cd) < 5){
+				var cd = Math.abs(red(this.col)-red(balls[i].col))+Math.abs(green(this.col)-green(balls[i].col))+Math.abs(blue(this.col)-blue(balls[i].col));
+				if(Math.abs(cd) < 2){
 					this.complet = true;
 				}
 			}
@@ -295,11 +328,10 @@ class Title{
 
 	show() {
 		if(!this.view) return;
-		textSize((width*0.5)/10);
-		textAlign(CENTER, CENTER);
-		textStyle(NORMAL);
+		var ss = (width*0.5)/10
+		textSize(ss);
 		fill(0);
-		text(this.title, width/2, height/2+4);
+		text(this.title, width/2, height/2+ss*0.05);
 		fill(255);
 		text(this.title, width/2, height/2);
 	}
@@ -314,3 +346,82 @@ class Title{
 		this.view = true;
 	}
 }
+
+function randomLevel() {
+	var nl = new Object();
+	var n = "RND"
+	nl.name = n;
+	var w = parseInt(2+Math.random()*6);
+	var h = parseInt(2+Math.random()*6);
+	nl.width = w;
+	nl.height = h;
+	///////////////
+	var g = new Array(h);
+	for (var i = 0; i < h; i++) {
+  		g[i] = new Array(w);
+		for (var j = 0; j < w; j++) {
+			g[i][j] = 0;
+		}
+	}
+	///////////////
+	var b = parseInt(Math.random()*(w*h)*0.9);
+	for(var i = 0; i < b; i++) {
+		var x = parseInt(Math.random()*w);
+		var y = parseInt(Math.random()*h);
+		if(g[y][x] == 1) i--;
+		g[y][x] = 1;
+	}
+	nl.grid = g;
+
+	var p = Math.max(2, parseInt(Math.random()*(w*h-b)*0.8*Math.random()));
+	nl.balls = [];
+	var c = "#FF1A55";
+	for(var i = 0; i < p; i++){
+		var search = true;
+		var ball = new Object();
+		ball.color = c;
+		do{
+			search = false;
+			var x = parseInt(Math.random()*w);
+			var y = parseInt(Math.random()*h);
+			ball.x = x;
+			ball.y = y;
+			if(g[y][x] == 1) search = true;
+			if(!search) {
+				for(var j = 0; j < nl.balls.length; j++) {
+					if(nl.balls[j].x == x && nl.balls[j].y == y) {
+						search = true;
+						break;
+					}
+				}
+			}
+		} while(search);
+		nl.balls.push(ball);
+	}
+	nl.goals = [];
+	for(var i = 0; i < p; i++){
+		var search = true;
+		var goal = new Object();
+		goal.color = c;
+		do{
+			search = false;
+			var x = parseInt(Math.random()*w);
+			var y = parseInt(Math.random()*h);
+			goal.x = x;
+			goal.y = y;
+			if(g[y][x] == 1) search = true;
+			if(!search) {
+				for(var j = 0; j < nl.goals.length; j++) {
+					if(nl.goals[j].x == x && nl.goals[j].y == y) {
+						search = true;
+						break;
+					}
+				}
+			}
+		} while(search);
+		nl.goals.push(goal);
+	}
+	return nl;
+}
+
+
