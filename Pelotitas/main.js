@@ -3,7 +3,7 @@ var levelNum;
 var tileSize;
 var title;
 
-var debug = true;
+var debug = false;
 
 function setup() {
 	var w = window.innerWidth-100;
