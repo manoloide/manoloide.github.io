@@ -73,10 +73,12 @@ function keyPressed(){
 var touchMovement;
 function touchStarted() {
 	touchMovement = createVector();
+	return false;
 }
 
 function touchMoved() {
 	touchMovement.add(createVector(ptouchX-touchX, ptouchY-touchY));
+	return false;
 }
 
 function touchEnded() {
@@ -90,6 +92,7 @@ function touchEnded() {
 		y = (touchMovement.y > 0)? -1 : 1;
 	}
 	level.move(x, y)
+	return false;
 }
 
 class Level {
