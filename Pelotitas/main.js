@@ -29,7 +29,7 @@ function draw() {
 }
 
 function keyPressed(){ 
-	var v = tileSize;
+	var v = 1;
 	if (keyCode === LEFT_ARROW) {
 		level.move(-v, 0);
 	}
@@ -68,6 +68,28 @@ function keyPressed(){
 			title.newTitle(level.name);
 		}
 	}
+}
+
+var touchMovement;
+function touchStarted() {
+	touchMovement = createVector();
+}
+
+function touchMoved() {
+	touchMovement.add(createVector(ptouchX-touchX, ptouchY-touchY));
+}
+
+function touchEnded() {
+	var x = 0;
+	var y = 0;
+	var len = touchMovement.mag();
+	if(len < 30) return;
+	if(Math.abs(touchMovement.x) > Math.abs(touchMovement.y)){
+		x = (touchMovement.x > 0)? -1 : 1;
+	} else {
+		y = (touchMovement.y > 0)? -1 : 1;
+	}
+	level.move(x, y)
 }
 
 class Level {
@@ -217,7 +239,7 @@ class Level {
 
 		var moving = false;
 		for(var i = 0; i < this.balls.length; i++) {
-			if(this.balls[i].move(x, y)) moving = true;
+			if(this.balls[i].move(x*tileSize, y*tileSize)) moving = true;
 		} 
 
 		if(moving){
