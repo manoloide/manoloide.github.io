@@ -3,13 +3,14 @@ var levelNum;
 var tileSize;
 var title;
 
-var debug = false;
+var debug = true;
 
 function setup() {
 	var w = window.innerWidth-100;
 	var h = window.innerHeight-100;
 	var canvas = createCanvas(w, h);
 	canvas.class("center");
+	canvas.parent(document.getElementById('content'));
 
 	levelNum = 0;
 	if(debug) levelNum = Levels.length-1;
@@ -17,16 +18,13 @@ function setup() {
 
 
 	textFont('Quicksand');
-	textAlign(CENTER, CENTER);
-	textStyle(NORMAL);
-	title = new Title(level.name, 1);
+	title = new Title(level.name, 1000);
 }
 
 function draw() {
 	push();
 	level.show();
 	pop();
-	title.update();
 	title.show();
 }
 
@@ -46,7 +44,7 @@ function keyPressed(){
 	}
 
 	if(key  === 'R'){
-		level = new Level(Levels[levelNum]);
+		level.reset();
 	}
 
 	if(debug){
@@ -74,6 +72,7 @@ function keyPressed(){
 
 class Level {
 	constructor(json) {
+		this.json = json;
 		this.loadLevel(json);
 	}
 
@@ -110,11 +109,32 @@ class Level {
 			}
 		} 
 
+		if(debug) {
+			textAlign(LEFT, TOP);
+			textSize(20);
+			fill(255);
+			text("Movements:"+this.movements, 20, 20);
+		}
 
 	}
 
+	reset(time){
+		setTimeout(function(level){
+			level.loadLevel(level.json);
+			title.newTitle(level.name);
+		}, time, this);
+	}
+
+	lose() {
+		this.block = true;
+		title.newTitle("LOSE");
+		this.reset(title.timeView);
+	}
+
 	loadLevel(json) {
+		this.json = json;
 		this.name = json.name;
+		this.movements = 0;
 		this.w = json.width; 
 		this.h = json.height;
 		this.win = false;
@@ -195,12 +215,16 @@ class Level {
 	move(x, y){
 		if(this.block) return;
 
+		var moving = false;
 		for(var i = 0; i < this.balls.length; i++) {
-			this.balls[i].move(x, y);
+			if(this.balls[i].move(x, y)) moving = true;
 		} 
-		this.clearRepeats()
 
-		this.checkWin();
+		if(moving){
+			this.movements++;
+			this.clearRepeats()
+			this.checkWin();
+		}
 	}
 
 	checkWin(){
@@ -210,6 +234,7 @@ class Level {
 			if(this.goals[i].complet) count++;
 		} 
 
+		if(this.balls.length < this.goals.length) this.lose();
 		if(this.balls.length != this.goals.length) return;
 
 		if(count == this.goals.length) {
@@ -258,7 +283,7 @@ class Ball {
 	}
 
 	move(x, y){
-		if(this.parent != null) return;
+		if(this.parent != null) return false;
 		var nx = this.nx+x;
 		var ny = this.ny+y;
 		if(nx <= 0 || nx >= level.width || ny <= 0 || ny > level.height) return;
@@ -267,7 +292,9 @@ class Ball {
 		if(level.grid[nx][ny] == 0) {
 			this.nx += x;
 			this.ny += y;
+			return true;
 		}
+		return false;
 	}
 
 	setParent(parent){
@@ -315,20 +342,15 @@ class Title{
 	constructor(title, timeView){
 		this.title = title;
 		this.timeView = timeView;
-		this.time = timeView; 
-		this.view = true;
-	}
-
-	update() {
-		this.time -= 1/60.;
-		if(this.time < 0){
-			this.view = false;
-		}
+		this.calls = 0;
+		this.show2();
 	}
 
 	show() {
 		if(!this.view) return;
-		var ss = (width*0.5)/10
+		var ss = (width*0.5)/9
+		textAlign(CENTER, CENTER);
+		textStyle(NORMAL);
 		textSize(ss);
 		fill(0);
 		text(this.title, width/2, height/2+ss*0.05);
@@ -336,14 +358,25 @@ class Title{
 		text(this.title, width/2, height/2);
 	}
 
-	newTitle(title){
-		this.title = title;
-		this.reset();
+	show2(){
+		this.view = true;
+		this.calls++;
+		setTimeout(function(title){
+			title.hide();
+		}, this.timeView, this);
 	}
 
-	reset() {
-		this.time = this.timeView;
-		this.view = true;
+	hide() {
+		this.calls--;
+		if(this.calls <= 0){
+			this.calls = 0;
+			this.view = false;
+		}
+	}
+
+	newTitle(title){
+		this.title = title;
+		this.show2();
 	}
 }
 
