@@ -3,7 +3,7 @@ var levelNum;
 var tileSize;
 var title;
 
-var debug = true;
+var debug = false;
 
 function setup() {
 	var w = window.innerWidth-100;
@@ -29,7 +29,7 @@ function draw() {
 }
 
 function keyPressed(){ 
-	var v = 1;
+	var v = tileSize;
 	if (keyCode === LEFT_ARROW) {
 		level.move(-v, 0);
 	}
@@ -68,30 +68,6 @@ function keyPressed(){
 			title.newTitle(level.name);
 		}
 	}
-}
-
-var touchMovement;
-function touchStarted() {
-	touchMovement = createVector();
-}
-
-function touchMoved() {
-	touchMovement.add(createVector(ptouchX-touchX, ptouchY-touchY));
-}
-
-function touchEnded() {
-	var x = 0;
-	var y = 0;
-	var dx = Math.abs(touchMovement.x);
-	var dy = Math.abs(touchMovement.y);
-	var len = touchMovement.mag();
-	if(len < 30) return;
-	if(Math.abs(touchMovement.x) > Math.abs(touchMovement.y)){
-		x = (touchMovement.x > 0)? -1 : 1;
-	} else {
-		y = (touchMovement.y > 0)? -1 : 1;
-	}
-	level.move(x, y)
 }
 
 class Level {
@@ -241,7 +217,7 @@ class Level {
 
 		var moving = false;
 		for(var i = 0; i < this.balls.length; i++) {
-			if(this.balls[i].move(x*tileSize, y*tileSize)) moving = true;
+			if(this.balls[i].move(x, y)) moving = true;
 		} 
 
 		if(moving){
