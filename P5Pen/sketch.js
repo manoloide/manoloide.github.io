@@ -1,3 +1,6 @@
+var canvas, drawing, gui;
+var onGui;
+var globalAlpha;
 var lines = [];
 var beginDrawing, isDrawing;
 var modifiers = [];
@@ -6,8 +9,11 @@ var modifiers = [];
 function setup() {
 	var w = window.innerWidth-260;
 	var h = window.innerHeight;
-	canvas = createCanvas(w, h);
-	canvas.parent('container');
+	p5 = createCanvas(w, h);
+	p5.parent('container');
+	canvas = createGraphics(w, h);
+	drawing = createGraphics(w, h);
+	gui = createGraphics(w, h);
 
 	
 	//modifiers.push(new MirrorModifier(10, createVector(width*0.1, height*0.1), 0.25));
@@ -16,7 +22,7 @@ function setup() {
 	modifiers.push(tile);
 	modifiers.push(mirror);
 	modifiers.push(new MirrorModifier(10, createVector(width/2, height/2), 0.25, true));
-	modifiers.push(new DrawLineModifier(1, color(0, 80)));
+	modifiers.push(new DrawLineModifier(drawing, 1, color(0, 80)));
 
 	for(var i = 0; i < modifiers.length; i++) {
 		modifiers[i].createGui();
@@ -25,18 +31,20 @@ function setup() {
 	mirror.setActive(false);
 	tile.setActive(false);
 
-	background(250);
+	canvas.background(250);
 }
 
 
 function draw() {
 	
 	var lines = [];
+	onGui = (mouseX > width)? true : false;
 
 	for(var i = 0; i < modifiers.length; i++) {
 		modifiers[i].updateParams();
 	}
 
+	image(canvas, 0, 0);
 	if(isDrawing) {
 		if(beginDrawing) {
 			lines.push(new Line(createVector(mouseX, mouseY), createVector(mouseX, mouseY)));
@@ -52,6 +60,17 @@ function draw() {
 		for(var i = 0; i < modifiers.length; i++) {
 			if(modifiers[i].active.value) modifiers[i].update(lines);
 		}
+
+		image(drawing, 0, 0);
+	}
+
+	if(onGui) {
+		gui.clear();
+		for(var i = 0; i < modifiers.length; i++) {
+			if(modifiers[i].active.value) modifiers[i].gui();
+		}
+
+		image(gui, 0, 0);
 	}
 
 }
@@ -60,6 +79,7 @@ function mousePressed() {
 	if(mouseX <= width) {
 		beginDrawing = true;
 		isDrawing = true;
+		drawing.clear();
 	}
 }
 
@@ -69,6 +89,9 @@ function mouseReleased() {
 			if(modifiers[i].active.value) modifiers[i].end();
 		}
 		isDrawing = false;
+		canvas.tint(255, globalAlpha);
+		canvas.image(drawing.get(), 0, 0);
+		canvas.noTint();
 	}
 }
 
@@ -113,6 +136,28 @@ MirrorModifier.prototype.update = function(lines) {
 	}
 }
 
+MirrorModifier.prototype.gui = function() {
+	this.begin();
+	var cc = lines.length;
+	var center = this.center.value; 
+	var segments = this.segments.value;
+	var rotate = this.rotate.value;
+	var angle, c, s;
+	var diag = dist(0, 0, width, height);
+	for(var i = 0; i < segments; i++){
+		angle = this.da*i+rotate;
+		c = cos(angle);
+		s = sin(angle);
+		gui.stroke(0, 128);
+		gui.line(center.x, center.y, center.x+c*diag, center.y+s*diag);
+		gui.stroke("#27BDFB");
+		gui.line(center.x, center.y, center.x+c*diag, center.y+s*diag);
+	}
+	gui.fill("#27BDFB");
+	gui.ellipse(center.x, center.y, 12, 12);
+}
+
+
 var TileModifier = function(w, h) {
 	Modifier.call(this, "Tile Modifier");
 	this.width = this.addParam(new IntProperty("Width", w, 20, 400));
@@ -152,11 +197,28 @@ TileModifier.prototype.update = function(lines) {
 	}
 }
 
+TileModifier.prototype.gui = function() {
+	this.begin();
+	for(var i = 0; i < width; i+=this.width.value){
+		gui.stroke(0, 128);
+		gui.line(i+0.5, 0+0.5, i+0.5, height+0.5);
+		gui.stroke("#27BDFB");
+		gui.line(i, 0, i, height);
+	}
+	for(var i = 0; i < height; i+=this.height.value){
+		gui.stroke(0, 128);
+		gui.line(0+0.5, i+0.5, width+0.5, i+0.5);
+		gui.stroke("#27BDFB");
+		gui.line(0, i, width, i);
+	}
+}
 
 
-var DrawLineModifier = function(strokeWeight, color) {
+
+var DrawLineModifier = function(canvas, strokeWeight, color) {
 	Modifier.call(this, "Draw Line");
 
+	this.canvas = canvas;
 	this.strokeWeight = this.addParam(new FloatProperty("Stroke Weight", strokeWeight, 0.5, 20, 0.1));
 	this.color = this.addParam(new ColorProperty("Color", color));
 }
@@ -165,11 +227,13 @@ DrawLineModifier.prototype = Object.create(Modifier.prototype);
 DrawLineModifier.prototype.constructor = DrawLineModifier;
 
 DrawLineModifier.prototype.update = function(lines) {
-	stroke(this.color.value);
-	strokeWeight(this.strokeWeight.value);
+	var col = this.color.value; 
+	globalAlpha = alpha(col);
+	this.canvas.stroke(red(col), green(col), blue(col));
+	this.canvas.strokeWeight(this.strokeWeight.value);
 	for(var i = 0; i < lines.length; i++) {
 		var p1 = lines[i].p1;
 		var p2 = lines[i].p2;
-		line(p1.x, p1.y, p2.x, p2.y);
+		this.canvas.line(p1.x, p1.y, p2.x, p2.y);
 	}
 }
