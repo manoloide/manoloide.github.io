@@ -69,6 +69,7 @@ function keyPressed(){
 	}
 }
 
+/*
 var touchMovement;
 function touchStarted() {
 	touchMovement = createVector();
@@ -95,6 +96,7 @@ function touchEnded() {
 	level.move(x, y);
 	return false;
 }
+*/
 
 class Level {
 	constructor(json) {
