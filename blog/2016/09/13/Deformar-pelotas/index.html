@@ -88,18 +88,6 @@
                         </li>
                         
                     
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
 
                 </ul>
             </div>
@@ -319,9 +307,8 @@
   }, "sketch03");
 </script>
 
-<h2 id="Deformando-el-circulo"><a href="#Deformando-el-circulo" class="headerlink" title="Deformando el circulo"></a>Deformando el circulo</h2><p>Ya sabemos como dibujar nuestro propio circulo, ahora vamos a ver como lo podemos deformar. Lo primero es crear los vertices del circulo y ubicarlos como vimos antes. Despues fijemonos si las pelotas se superponen, si no se superponen no hacemos nada. Pero si se superponen, vamos hacer que los vertices que estan dentro de la otra pelota se alejen de esta. Para esto calculemos la distancia de cada vertice al centro de la otra pelota, si es inferior al radio, tendremos que hacer que se alejen. Esto lo podemos hacer calculando el angulo que hay entre el vertice y el centro de la otra pelota. Para esto podemos usar atan2, que nos devuelve el angulo entre dos puntos (atan2(p1.y-p2.y, p1.x-p2.x) = angulo entre p1 y p2). Teniendo este angulo y ya sabiendo como desplazarnos, solo nos quedaria ver cuanto nos tenemos que desplazar, en este caso decidi que nos desplazemos lo que falta para que no se toquen, osea el radio menos la distacia entre el vertice y el centro. </p>
+<h2 id="Deformando-el-circulo"><a href="#Deformando-el-circulo" class="headerlink" title="Deformando el circulo"></a>Deformando el circulo</h2><p>Ya sabemos como dibujar nuestro propio circulo, ahora vamos a ver como lo podemos deformar. Lo primero es crear los vértices del circulo y ubicarlos como vimos antes. Después fijémonos si las pelotas se superponen, si no se superponen no hacemos nada. Pero si se superponen, vamos hacer que los vértices que están dentro de la otra pelota se alejen de esta. Para esto calculemos la distancia de cada vértice al centro de la otra pelota, si es inferior al radio, tendremos que hacer que se alejen. Esto lo podemos hacer calculando el angulo que hay entre el vértice y el centro de la otra pelota. Para esto podemos usar atan2, que nos devuelve el angulo entre dos puntos (atan2(p1.y-p2.y, p1.x-p2.x) = angulo entre p1 y p2). Teniendo este angulo y ya sabiendo como desplazarnos, solo nos quedaría ver cuanto nos tenemos que desplazar, en este caso decidí que nos desplacemos lo que falta para que no se toquen, osea el radio menos la distancia entre el vértice y el centro. </p>
 <figure class="highlight"><table><tr><td class="code"><pre><div class="line">void setup() &#123;</div><div class="line">  size(750, 400);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void draw() &#123;</div><div class="line">  background(255);</div><div class="line"></div><div class="line">  float posXA = mouseX;</div><div class="line">  float posYA = mouseY;</div><div class="line">  float sizeA = 180;</div><div class="line"></div><div class="line">  float posXB = width/2;</div><div class="line">  float posYB = height/2;</div><div class="line">  float sizeB = 180;</div><div class="line"></div><div class="line">  //dibujamos la pelota solida</div><div class="line">  noStroke();</div><div class="line">  fill(#ffda4c, 40);</div><div class="line">  ellipse(posXA, posYA, sizeA, sizeA);</div><div class="line">  fill(#ffda4c);</div><div class="line">  ellipse(posXA, posYA, sizeA*0.6, sizeA*0.6);</div><div class="line"></div><div class="line">  //creamos los vertices de la pelota</div><div class="line">  ArrayList&lt;PVector&gt; points = new ArrayList&lt;PVector&gt;();</div><div class="line">  float radius = sizeB*0.5;</div><div class="line">  int resolution = 16;</div><div class="line">  float angleDisplace = TWO_PI/resolution;</div><div class="line">  for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">    PVector point = new PVector();</div><div class="line">    float angle = i*angleDisplace;</div><div class="line">    point.x = posXB+cos(angle)*radius;</div><div class="line">    point.y = posYB+sin(angle)*radius;</div><div class="line">    points.add(point);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  //deformamos los vertices de la pelota</div><div class="line">  float distance = dist(posXA, posYA, posXB, posYB);</div><div class="line">  if (distance &lt; (sizeA+sizeB)/2) &#123;</div><div class="line">    for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">      PVector point = points.get(i);</div><div class="line"></div><div class="line">      float dist = dist(mouseX, mouseY, point.x, point.y);</div><div class="line">      if (dist &lt; radius) &#123;</div><div class="line">        float ang = atan2(mouseY-point.y, mouseX-point.x);</div><div class="line">        dist = radius-dist;</div><div class="line">        point.x -= cos(ang)*dist;</div><div class="line">        point.y -= sin(ang)*dist;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      fill(#ffa11f);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  //dibujamos la pelota con su deformacion</div><div class="line">  PVector point = points.get(0);</div><div class="line">  beginShape();</div><div class="line">  curveVertex(point.x, point.y);</div><div class="line">  for (int i = 0; i &lt;= resolution; i++) &#123;</div><div class="line">    point = points.get(i%resolution);</div><div class="line">    curveVertex(point.x, point.y);</div><div class="line">  &#125;</div><div class="line">  endShape(CLOSE);</div><div class="line"></div><div class="line">  //dibujamos los vertices para poder verlos</div><div class="line">  fill(0);</div><div class="line">  for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">    point = points.get(i);</div><div class="line">    ellipse(point.x, point.y, 4, 4);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Esto es solo un ejemplo basico, pero podemos lograr muchas cosas. Jugando con las distancias minimas y maximas, variando cuanto se tiene que desplazar, probando acercarnos en vez de alejarnos, moviendo las pelotas, usando otras formas… ect.<br>Espero que les surgan dudas y jueguen un rato con esto.</p>
 <p><div id="sketch04"> sketch 04 </div></p>
 <script type="text/javascript">
   new p5(function(p){
@@ -398,6 +385,9 @@
     }
   }, "sketch03");
 </script>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusión"></a>Conclusión</h2><p>Esto es solo un ejemplo básico, pero podemos lograr muchas cosas. Jugando con las distancias mínimas y máximas, variando cuanto se tiene que desplazar, probando acercarnos en vez de alejarnos, moviendo las pelotas, usando otras formas… ect.<br>Espero que les surgan dudas y jueguen un rato con esto.</p>
+
                 <hr>
                 
 
@@ -414,7 +404,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduccion"><span class="toc-text">Introduccion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Empecemos"><span class="toc-text">Empecemos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forma"><span class="toc-text">Forma</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dibujando-un-poligono"><span class="toc-text">Dibujando un polígono</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deformando-el-circulo"><span class="toc-text">Deformando el circulo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduccion"><span class="toc-text">Introduccion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Empecemos"><span class="toc-text">Empecemos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forma"><span class="toc-text">Forma</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dibujando-un-poligono"><span class="toc-text">Dibujando un polígono</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deformando-el-circulo"><span class="toc-text">Deformando el circulo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusión</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
