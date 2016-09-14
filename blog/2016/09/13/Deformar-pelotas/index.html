@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mi blog...">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Manoloide" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Deformar pelotas｜Manoloide&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://manoloide.github.io/blog/blog/2016/09/13/Deformar-pelotas/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/blog/css/syntax.css">
+
+
+    <!-- <script src="/blog/js/p5.min.js"></script> -->
+    <!-- <script src="/blog/js/addons/p5.dom.js"></script> -->
+
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('images/back.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/blog/">
+                <span class="brand-logo">
+                    Manoloide
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/blog/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/blog/images/back.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('images/back.png');
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Deformar pelotas</h1>
+                    
+                    <span class="meta">
+                        Manoloide
+                        <span>
+                            2016-09-13
+                        </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/blog/tags/#processing"
+                           title="processing">processing</a>
+                        
+                        <a class="tag" href="/blog/tags/#p5js"
+                           title="p5js">p5js</a>
+                        
+                        <a class="tag" href="/blog/tags/#tutorial"
+                           title="tutorial">tutorial</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Deformar pelotas
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introduccion"></a>Introduccion</h1><p>Hace unos días en un foro preguntaron como funcionaba <a href="http://paperjs.org/examples/candy-crash/" target="_blank" rel="external">este ejemplo</a> de <a href="http://paperjs.org/" target="_blank" rel="external">Paper.js</a>. Me puse a <a href="https://codepen.io/manoloide/pen/AXZKko" target="_blank" rel="external">portarlo</a> a <a href="https://p5js.org/" target="_blank" rel="external">P5.js</a>, pero no me puse a analizar como funcionaba. En estos días me fue picando la curiosidad y ayer me puse a intentar armar un ejemplo muy sencillo de como funciona.</p>
+<h2 id="Empecemos"><a href="#Empecemos" class="headerlink" title="Empecemos"></a>Empecemos</h2><p>Hay varias cosas en el ejemplo, pero me parece que lo central y lo lindo es la deformación que ocurre cuando dos pelotitas colisionan. Hagamos de cuenta que solo tenemos dos pelotas A y B. Las cuales tiene una posición y un radio. Para saber si estas se interceptan solo tendríamos que saber si la distancia entre sus posiciones es menor a la suma de sus radios. </p>
+<p>Hagamos que una de las pelotas siga al mouse y la otra se quede en el centro de la pantalla.</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">void setup() &#123;</div><div class="line">  size(750, 400);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void draw() &#123;</div><div class="line">  background(255);</div><div class="line"></div><div class="line">  float posXA = mouseX;</div><div class="line">  float posYA = mouseY;</div><div class="line">  float sizeA = 160;</div><div class="line"></div><div class="line">  float posXB = width/2;</div><div class="line">  float posYB = height/2;</div><div class="line">  float sizeB = 240;</div><div class="line">  </div><div class="line">  noStroke();</div><div class="line">  fill(#ffda4c);</div><div class="line">  ellipse(posXA, posYA, sizeA, sizeA);</div><div class="line">  ellipse(posXB, posYB, sizeB, sizeB);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<script src="/blog/js/p5.min.js"></script>
+<script src="/blog/js/addons/p5.dom.js"></script>
+<div id="sketch01"> sketch 01 </div>
+
+<script type="text/javascript">
+  new p5(function(p){
+    p.setup = function() {
+      var canvas01 = p.createCanvas(750, 400);
+      canvas01.parent('sketch01');
+    }
+
+    p.draw = function() {    
+      p.background(255);
+
+      var posXA = p.mouseX;
+      var posYA = p.mouseY;
+      var sizeA = 160;
+
+      var posXB = p.width/2;
+      var posYB = p.height/2;
+      var sizeB = 240;
+
+      p.noStroke();
+      p.fill("#ffda4c");
+      p.ellipse(posXA, posYA, sizeA, sizeA);
+      p.ellipse(posXB, posYB, sizeB, sizeB);
+    }
+  }, "sketch03");
+</script>
+
+
+<p>Bien, ahora fijémonos si se tocan. Como dije anteriormente, solo tendríamos que ver si la distancia de los centros de las circunferencias, es menos a la suma de sus radios. </p>
+<blockquote>
+<p>Tengan en cuenta que tanto sizeA como size B, no representan el radio sino el diámetro de las circunferencias, por lo tanto hay que dividirlos por dos… </p>
+<p><strong>radio = diametro / 2     &lt;=&gt;     diametro = radio * 2</strong></p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">void setup() &#123;</div><div class="line">  size(750, 400);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void draw() &#123;</div><div class="line">  background(255);</div><div class="line"></div><div class="line">  float posXA = mouseX;</div><div class="line">  float posYA = mouseY;</div><div class="line">  float sizeA = 160;</div><div class="line"></div><div class="line">  float posXB = width/2;</div><div class="line">  float posYB = height/2;</div><div class="line">  float sizeB = 240;</div><div class="line">  </div><div class="line">  noStroke();</div><div class="line">  fill(#ffda4c);</div><div class="line"></div><div class="line">  float distance = dist(posXA, posYA, posXB, posYB);</div><div class="line">  // (sizeA+sizeB)/2 == sizeA/2+sizeB/2</div><div class="line">  if(distance &lt; (sizeA+sizeB)/2) &#123;</div><div class="line">    fill(#ffa11f);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ellipse(posXA, posXB, sizeA, sizeA);</div><div class="line">  ellipse(posXB, posYB, sizeB, sizeB);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><div id="sketch02"> sketch 02 </div></p>
+<script type="text/javascript">
+    new p5(function(p){
+    p.setup = function() {
+      var canvas02 = p.createCanvas(750, 400);
+      canvas02.parent('sketch02');
+    }
+
+    p.draw = function() {    
+      p.background(255);
+
+      var posXA = p.mouseX;
+      var posYA = p.mouseY;
+      var sizeA = 160;
+
+      var posXB = p.width/2;
+      var posYB = p.height/2;
+      var sizeB = 240;
+
+      p.noStroke();
+      p.fill("#ffda4c");
+
+      var distance = p.dist(posXA, posYA, posXB, posYB);
+      // (sizeA+sizeB)/2 == sizeA/2+sizeB/2
+      if(distance < (sizeA+sizeB)/2) {
+        p.fill("#ffa11f");
+      }
+
+      p.ellipse(posXA, posYA, sizeA, sizeA);
+      p.ellipse(posXB, posYB, sizeB, sizeB);
+    }
+  }, "sketch03");
+</script>
+
+
+<h2 id="Forma"><a href="#Forma" class="headerlink" title="Forma"></a>Forma</h2><p>Se podría pensar un circulo como todos lo puntos en el plano, cuya distancia a un punto fijo (centro) es menor o igual a una constante (radio). Esta forma de pensarla nos podría ayudar en otros casos a dibujar un circulo. Otra forma de pensarlo, mas apropiada para lo que vamos hacer, es como un <a href="https://es.wikipedia.org/wiki/Pol%C3%ADgono" target="_blank" rel="external">polígono</a>. Se podría decir que un polígono de infinitos lados es un circunferencia, o que una circunferencia es un polígono de infinitos lados (?). Vamos al grano por que estoy explicando todo esto. Processing trae un función que se llama ellipse, esta nos dibuja una elipse en un punto dado, con sus dos radios (si estos son iguales nos dibujara una circunferencia). Es lo que veníamos usando, pero sucede que necesitamos alterar ese dibujo, por lo tanto necesitamos comprender como se esta dibujando. Processing en realidad dibuja un polígono, el cual no puede ser de lados infinitos por cuestiones de calculo. Pero nos vamos a dar cuenta que eso no es un problema. Veamos un ejemplo para que quede un poco mas claro. </p>
+<h3 id="Dibujando-un-poligono"><a href="#Dibujando-un-poligono" class="headerlink" title="Dibujando un polígono"></a>Dibujando un polígono</h3><p>Para dibujar un polígono vamos a necesitar un centro (x, y), un radio, y una resolución (La resolución va ser la cantidad de vértices o puntos que van a formar nuestro polígono). Sabemos que la distancia del centro a los vértices que conforman el contorno, tiene que ser igual al radio. ¿Como podemos hacer para obtener los vértices de nuestro polígono? Veamos la idea es la siguiente, posicionar cada vértice en el centro y desplazarlo un distancia igual al radio en distintas direcciones, de esta manera obtendríamos los puntos que están en el borde de circunferencia. Una solución es con <a href="https://es.wikipedia.org/wiki/Trigonometr%C3%ADa" target="_blank" rel="external">trigonométrica</a>, (perdón pero no voy a entrar en mucho detalle). Pero básicamente con las función seno y coseno, podemos lograr esto. El coseno de un angulo, nos devolverá el desplazamiento necesario en x, y el seno el desplazamiento necesario en y. Para que un punto se desplace en una unidad en la dirección dada por el angulo. Ejemplo: Si tenemos un punto en el origen (0, 0) le sumamos a <strong>x</strong> el coseno de 0° y a <strong>y</strong> el seno de 0°. Obtendremos el punto (1, 0), ya que el coseno(0°) = 1 y el seno(0°) = 0. Con un angulo de 45° obtendríamos (0.7071, 0.7071). De esta manera podes desplazarnos para dirección que queramos, solo dándole el angulo que necesitamos. Recordemos que este desplazamiento va ser solo de una unidad, para que sea de un valor dado, tendremos que multiplicar por este antes de sumar.<br>En nuestro caso multiplicaremos por el radio, que es lo que necesitamos, desplazarnos del centro a una distancia igual al radio. Con eso ya tenemos las herramientas necesarias para poder dibujar nuestro polígono.</p>
+<p>En este caso vamos a dibujar un <a href="https://es.wikipedia.org/wiki/Pol%C3%ADgono_regular" target="_blank" rel="external">polígono regular</a>. Por lo tanto cada vértice se va desplazar desde el centro en una dirección dada por un angulo. Este angulo va depender de la cantidad que vértices que tengamos. Por ejemplo, en el caso de dibujar un polígono de 4 lados, tendremos 4 vértices. Cada uno va a tener un dirección distinta (0° 90° 180° 270°), en uno de 6 lados (0° 60° 120° 180° 240° 300°)… estos números están dado por <strong> (360°/cantidad_lados) * numero_vertices</strong>. </p>
+<blockquote>
+<ul>
+<li>Para nuestro ejemplo haremos que la resolución varié con respecto a la posición en x del mouse, asi podremos apreciar que llegado a un numero de segmentos, dejamos de notar los segmentos (bordes duros) y vemos un circulo.</li>
+<li>Processing no trabaja en grados, trabaja en radianes.</li>
+</ul>
+</blockquote>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">void setup() &#123;</div><div class="line">  size(750, 400);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void draw() &#123;</div><div class="line">  background(255);</div><div class="line"></div><div class="line">  float x = width/2;</div><div class="line">  float y = height/2;</div><div class="line">  float radius = 240;</div><div class="line"></div><div class="line">  int resolution = int(map(mouseX, 0, width, 3, 60));</div><div class="line"></div><div class="line">  noStroke();</div><div class="line">  fill(#ffda4c);</div><div class="line"></div><div class="line">  beginShape();</div><div class="line">  for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">    float angle = (TWO_PI/resolution)*i;</div><div class="line">    vertex(x+cos(angle)*radius, y+sin(angle)*radius);</div><div class="line">  &#125;</div><div class="line">  endShape(CLOSE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><div id="sketch03"> sketch 03 </div></p>
+<script type="text/javascript">
+  new p5(function(p){
+    p.setup = function() {
+      var canvas03 = p.createCanvas(750, 400);
+      canvas03.parent('sketch03');
+    }
+
+    p.draw = function() {    
+      p.background(255);
+
+      var x = p.width/2;
+      var y = p.height/2;
+      var radius = 170;
+
+      var resolution = p.int(p.map(p.mouseX, 0, p.width, 3, 60));
+      resolution = p.constrain(resolution, 3, 60);
+      var angleDisplace = p.TWO_PI/resolution;
+
+      p.noStroke();
+      p.fill("#ffda4c");
+
+      p.beginShape();
+      for (var i = 0; i < resolution; i++) {
+        var angle = i*angleDisplace;
+        p.vertex(x+p.cos(angle)*radius, y+p.sin(angle)*radius);
+      }
+      p.endShape(p.CLOSE);
+
+
+      p.textSize(120);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.fill("#ffa11f");
+      p.text(resolution, p.width/2, p.height/2);
+    }
+  }, "sketch03");
+</script>
+
+<h2 id="Deformando-el-circulo"><a href="#Deformando-el-circulo" class="headerlink" title="Deformando el circulo"></a>Deformando el circulo</h2><p>Ya sabemos como dibujar nuestro propio circulo, ahora vamos a ver como lo podemos deformar. Lo primero es crear los vertices del circulo y ubicarlos como vimos antes. Despues fijemonos si las pelotas se superponen, si no se superponen no hacemos nada. Pero si se superponen, vamos hacer que los vertices que estan dentro de la otra pelota se alejen de esta. Para esto calculemos la distancia de cada vertice al centro de la otra pelota, si es inferior al radio, tendremos que hacer que se alejen. Esto lo podemos hacer calculando el angulo que hay entre el vertice y el centro de la otra pelota. Para esto podemos usar atan2, que nos devuelve el angulo entre dos puntos (atan2(p1.y-p2.y, p1.x-p2.x) = angulo entre p1 y p2). Teniendo este angulo y ya sabiendo como desplazarnos, solo nos quedaria ver cuanto nos tenemos que desplazar, en este caso decidi que nos desplazemos lo que falta para que no se toquen, osea el radio menos la distacia entre el vertice y el centro. </p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">void setup() &#123;</div><div class="line">  size(750, 400);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void draw() &#123;</div><div class="line">  background(255);</div><div class="line"></div><div class="line">  float posXA = mouseX;</div><div class="line">  float posYA = mouseY;</div><div class="line">  float sizeA = 180;</div><div class="line"></div><div class="line">  float posXB = width/2;</div><div class="line">  float posYB = height/2;</div><div class="line">  float sizeB = 180;</div><div class="line"></div><div class="line">  //dibujamos la pelota solida</div><div class="line">  noStroke();</div><div class="line">  fill(#ffda4c, 40);</div><div class="line">  ellipse(posXA, posYA, sizeA, sizeA);</div><div class="line">  fill(#ffda4c);</div><div class="line">  ellipse(posXA, posYA, sizeA*0.6, sizeA*0.6);</div><div class="line"></div><div class="line">  //creamos los vertices de la pelota</div><div class="line">  ArrayList&lt;PVector&gt; points = new ArrayList&lt;PVector&gt;();</div><div class="line">  float radius = sizeB*0.5;</div><div class="line">  int resolution = 16;</div><div class="line">  float angleDisplace = TWO_PI/resolution;</div><div class="line">  for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">    PVector point = new PVector();</div><div class="line">    float angle = i*angleDisplace;</div><div class="line">    point.x = posXB+cos(angle)*radius;</div><div class="line">    point.y = posYB+sin(angle)*radius;</div><div class="line">    points.add(point);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  //deformamos los vertices de la pelota</div><div class="line">  float distance = dist(posXA, posYA, posXB, posYB);</div><div class="line">  if (distance &lt; (sizeA+sizeB)/2) &#123;</div><div class="line">    for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">      PVector point = points.get(i);</div><div class="line"></div><div class="line">      float dist = dist(mouseX, mouseY, point.x, point.y);</div><div class="line">      if (dist &lt; radius) &#123;</div><div class="line">        float ang = atan2(mouseY-point.y, mouseX-point.x);</div><div class="line">        dist = radius-dist;</div><div class="line">        point.x -= cos(ang)*dist;</div><div class="line">        point.y -= sin(ang)*dist;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      fill(#ffa11f);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  //dibujamos la pelota con su deformacion</div><div class="line">  PVector point = points.get(0);</div><div class="line">  beginShape();</div><div class="line">  curveVertex(point.x, point.y);</div><div class="line">  for (int i = 0; i &lt;= resolution; i++) &#123;</div><div class="line">    point = points.get(i%resolution);</div><div class="line">    curveVertex(point.x, point.y);</div><div class="line">  &#125;</div><div class="line">  endShape(CLOSE);</div><div class="line"></div><div class="line">  //dibujamos los vertices para poder verlos</div><div class="line">  fill(0);</div><div class="line">  for (int i = 0; i &lt; resolution; i++) &#123;</div><div class="line">    point = points.get(i);</div><div class="line">    ellipse(point.x, point.y, 4, 4);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Esto es solo un ejemplo basico, pero podemos lograr muchas cosas. Jugando con las distancias minimas y maximas, variando cuanto se tiene que desplazar, probando acercarnos en vez de alejarnos, moviendo las pelotas, usando otras formas… ect.<br>Espero que les surgan dudas y jueguen un rato con esto.</p>
+<p><div id="sketch04"> sketch 04 </div></p>
+<script type="text/javascript">
+  new p5(function(p){
+    p.setup = function() {
+      var canvas04 = p.createCanvas(750, 400);
+      canvas04.parent('sketch04');
+    }
+
+    p.draw = function() {    
+      p.background(255);
+
+      var posXA = p.mouseX;
+      var posYA = p.mouseY;
+      var sizeA = 180;
+
+      var posXB = p.width/2;
+      var posYB = p.height/2;
+      var sizeB = 180;
+
+      //dibujamos la pelota solida
+      p.noStroke();
+      p.fill("#ffda4c");
+      p.ellipse(posXA, posYA, sizeA, sizeA);
+      p.fill("#ffda4c");
+      p.ellipse(posXA, posYA, sizeA*0.6, sizeA*0.6);
+
+      //creamos los vertices de la pelota
+      var points = [];
+      var radius = sizeB*0.5;
+      var resolution = 16;
+      var angleDisplace = p.TWO_PI/resolution;
+      for (var i = 0; i < resolution; i++) {
+        var point = p.createVector();
+        var angle = i*angleDisplace;
+        point.x = posXB+p.cos(angle)*radius;
+        point.y = posYB+p.sin(angle)*radius;
+        points.push(point);
+      }
+
+      //deformamos los vertices de la pelota
+      var distance = p.dist(posXA, posYA, posXB, posYB);
+      if (distance < (sizeA+sizeB)/2) {
+        for (var i = 0; i < resolution; i++) {
+          var point = points[i];
+
+          var dist = p.dist(p.mouseX, p.mouseY, point.x, point.y);
+          if (dist < sizeB*0.5) {
+            dist = sizeB*0.5-dist;
+            var ang = p.atan2(p.mouseY-point.y, p.mouseX-point.x);
+            point.x -= p.cos(ang)*dist;
+            point.y -= p.sin(ang)*dist;
+          }
+
+          p.fill("#ffa11f");
+        }
+      }
+
+      //dibujamos la pelota con su deformacion
+      var point = points[0];
+      p.beginShape();
+      p.curveVertex(point.x, point.y);
+      for (var i = 0; i <= resolution; i++) {
+        point = points[i%resolution];
+        p.curveVertex(point.x, point.y);
+      }
+      p.endShape(p.CLOSE);
+
+      //dibujamos los vertices para poder verlos
+      p.fill(0);
+      for (var i = 0; i < resolution; i++) {
+        point = points[i];
+        p.ellipse(point.x, point.y, 4, 4);
+      }
+    }
+  }, "sketch03");
+</script>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduccion"><span class="toc-text">Introduccion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Empecemos"><span class="toc-text">Empecemos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forma"><span class="toc-text">Forma</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dibujando-un-poligono"><span class="toc-text">Dibujando un polígono</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deformando-el-circulo"><span class="toc-text">Deformando el circulo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/blog/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/blog/tags/#processing"
+                           title="processing">processing</a>
+                        
+                        <a class="tag" href="/blog/tags/#p5js"
+                           title="p5js">p5js</a>
+                        
+                        <a class="tag" href="/blog/tags/#tutorial"
+                           title="tutorial">tutorial</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/manoloidee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/manoloide">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/manoloide">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/manoloide">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Manoloide 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://manoloide.github.io/blog/blog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-1597354-9';
+    var _gaDomain = 'manoloide.github.io/blog';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="images/perfil.jpg">
+</body>
+
+</html>
