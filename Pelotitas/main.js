@@ -88,7 +88,7 @@ function touchEnded() {
 	var dx = Math.abs(touchMovement.x);
 	var dy = Math.abs(touchMovement.y);
 	var len = touchMovement.mag();
-	if(len < 80) return;
+	//if(len < 0.02) return;
 	if(Math.abs(touchMovement.x) > Math.abs(touchMovement.y)){
 		x = (touchMovement.x > 0)? -1 : 1;
 	} else {
