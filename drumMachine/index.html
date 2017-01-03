@@ -20,6 +20,7 @@
 			width: 960px;
 			margin: 10px auto;
 		}
+
 		.led {
 			width: 10px;
 			height: 10px;
@@ -223,6 +224,14 @@
 				changeSteps(3);
 			});
 
+			$('#kickMaster').on("change mousemove", function() {
+				console.log($(this).val());
+			    kick.volume = $(this).val();
+			    closedHiHat.volume = $(this).val();
+			});
+
+			changeSteps(0);
+
 			//intervalTick = setInterval("loopTick()", (1000*60/bpm)/4);
 			
 			var loop = new Tone.Loop(function(time){
@@ -277,6 +286,7 @@
 			<div class="titleZone">Kick</div>
 			<div class="bar1 naranjita"></div>
 			<div class="bar2 naranjita"></div>
+			<input id="kickMaster" type="range" min="-100" max="10" value="0" step="1">
 		</div>
 		<div id="snare" class="zone">
 			<div class="titleZone">Snare</div>
@@ -295,7 +305,7 @@
 		</div>
 		<div>
 			<div id="button0" class="button">
-				<div class="led ledOn"></div>
+				<div class="led"></div>
 			</div>
 			<div id="button1" class="button">
 				<div class="led"></div>
@@ -307,7 +317,7 @@
 				<div class="led"></div>
 			</div>
 			<div id="button4" class="button">
-				<div class="led ledOn"></div>
+				<div class="led"></div>
 			</div>
 			<div id="button5" class="button">
 				<div class="led"></div>
@@ -319,7 +329,7 @@
 				<div class="led"></div>
 			</div>
 			<div id="button8" class="button">
-				<div class="led ledOn"></div>
+				<div class="led"></div>
 			</div>
 			<div id="button9" class="button">
 				<div class="led"></div>
@@ -331,7 +341,7 @@
 				<div class="led"></div>
 			</div>
 			<div id="button12" class="button">
-				<div class="led ledOn"></div>
+				<div class="led"></div>
 			</div>
 			<div id="button13" class="button">
 				<div class="led"></div>
@@ -344,22 +354,22 @@
 			</div>
 		</div>
 		<div>
-			<div id="led0" class="led"></div>
-			<div id="led1" class="led"></div>
-			<div id="led2" class="led"></div>
-			<div id="led3" class="led"></div>
-			<div id="led4" class="led"></div>
-			<div id="led5" class="led"></div>
-			<div id="led6" class="led"></div>
-			<div id="led7" class="led"></div>
-			<div id="led8" class="led"></div>
-			<div id="led9" class="led"></div>
-			<div id="led10" class="led"></div>
-			<div id="led11" class="led"></div>
-			<div id="led12" class="led"></div>
-			<div id="led13" class="led"></div>
-			<div id="led14" class="led"></div>
-			<div id="led15" class="led"></div>
+			<div id="led0" class="led" style="margin: 25px;"></div>
+			<div id="led1" class="led" style="margin: 25px;"></div>
+			<div id="led2" class="led" style="margin: 25px;"></div>
+			<div id="led3" class="led" style="margin: 25px;"></div>
+			<div id="led4" class="led" style="margin: 25px;"></div>
+			<div id="led5" class="led" style="margin: 25px;"></div>
+			<div id="led6" class="led" style="margin: 25px;"></div>
+			<div id="led7" class="led" style="margin: 25px;"></div>
+			<div id="led8" class="led" style="margin: 25px;"></div>
+			<div id="led9" class="led" style="margin: 25px;"></div>
+			<div id="led10" class="led" style="margin: 25px;"></div>
+			<div id="led11" class="led" style="margin: 25px;"></div>
+			<div id="led12" class="led" style="margin: 25px;"></div>
+			<div id="led13" class="led" style="margin: 25px;"></div>
+			<div id="led14" class="led" style="margin: 25px;"></div>
+			<div id="led15" class="led" style="margin: 25px;"></div>
 		</div>
 	</div>
 </body>

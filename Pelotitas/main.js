@@ -4,6 +4,7 @@ var tileSize;
 var title;
 
 var debug = false;
+
 function setup() {
 	var w = window.innerWidth-100;
 	var h = window.innerHeight-100;
@@ -69,15 +70,15 @@ function keyPressed(){
 	}
 }
 
-/*
 var touchMovement;
+
 function touchStarted() {
 	touchMovement = createVector();
 	return false;
 }
 
 function touchMoved() {
-	touchMovement.add(createVector(ptouchX-touchX, ptouchY-touchY));
+	touchMovement.add(createVector((ptouchX-touchX)*1./width, (ptouchY-touchY)*1./height);
 	return false;
 }
 
@@ -96,7 +97,7 @@ function touchEnded() {
 	level.move(x, y);
 	return false;
 }
-*/
+
 
 class Level {
 	constructor(json) {
@@ -380,8 +381,8 @@ class Title{
 		textAlign(CENTER, CENTER);
 		textStyle(NORMAL);
 		textSize(ss);
-		fill(0);
-		text(this.title, width/2, height/2+ss*0.05);
+		//fill(0);
+		//text(this.title, width/2, height/2+ss*0.05);
 		fill(255);
 		text(this.title, width/2, height/2);
 	}
