@@ -78,7 +78,7 @@ function touchStarted() {
 }
 
 function touchMoved() {
-	touchMovement.add(createVector((ptouchX-touchX)*1./width, (ptouchY-touchY)*1./height);
+	touchMovement.add(createVector((ptouchX-touchX)*1./width, (ptouchY-touchY)*1./height));
 	return false;
 }
 
