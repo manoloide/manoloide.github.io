@@ -42,15 +42,15 @@ function draw() {
 
 	background(10);
 
-	strokeWeight(1);
-	stroke(140);
+	strokeWeight(2);
+	stroke(90);
 	noFill();
 	rectMode(CENTER);
 	var dx = (width-ss*(cc-1))*0.5;
 	var dy = (height-ss*(cc-1))*0.5;
 	for(var j = 0; j < cc; j++){
 		for(var i = 0; i < cc; i++){
-			if(values[i+j*cc] == 1) fill(140);
+			if(values[i+j*cc] == 1) fill(90);
 			else noFill();
 			if(i+j*cc == actual) fill(0);
 			rect(dx+i*ss, dy+j*ss, ss*0.8, ss*0.8, 1);
