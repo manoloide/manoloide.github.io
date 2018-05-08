@@ -1,12 +1,12 @@
 var synthA, synthB;
+var rev1, rev2;
 
 var time, changeTime;
 var vel1, vel2;
 
 function preload(){
 	var pan1 = new Tone.Panner(-1).toMaster();
-	var rev1 = new p5.Reverb();
-
+	rev1 = new Tone.Freeverb(0.1, 1000).connect(pan1);
 	synthA = new Tone.MonoSynth({
 		"portamento" : 0.1,
 		"oscillator" : {
@@ -19,10 +19,11 @@ function preload(){
 			"release" : 1.4,
 		},
 		"volume" : -10
-	}).connect(rev1).connect(pan1);
+	}).connect(rev1);
 
 	var pan2 = new Tone.Panner(1).toMaster();
-	var rev2 = new p5.Reverb();
+	rev2 = new Tone.Freeverb(0.1, 1000).connect(pan2);
+
 	synthB = new Tone.MonoSynth({
 		"portamento" : 0.1,
 		"oscillator" : {
@@ -35,14 +36,7 @@ function preload(){
 			"release" : 1.4,
 		},
 		"volume" : -10
-	}).connect(rev2).connect(pan2);
-
-	reverb = new p5.Reverb();
-  // sonnects soundFile to reverb with a
-  // reverbTime of 6 seconds, decayRate of 0.2%
-  reverb.process(soundFile, 6, 0.2);
-
-  reverb.amp(4); // turn it up!
+	}).connect(rev2);
 }
 
 function setup() {
