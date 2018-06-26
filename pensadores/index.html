@@ -1,113 +1,115 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Pensador Records</title>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Mr+Dafoe|Yellowtail" rel="stylesheet">
-	<style type="text/css">
-		html, body{
-			background: black;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-		}
+	<head>
+		<meta charset="utf-8">
+		<title>Pensador Records</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Mr+Dafoe|Yellowtail" rel="stylesheet">
+		<style type="text/css">
+			html, body{
+				background: black;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
 
-		canvas {
-			width: 100%; height: 100%; cursor: pointer;
-		}
+			canvas {
+				width: 100%; height: 100%; cursor: pointer;
+			}
 
-		.main-bg{
-			background-color: red;
-		}
+			.main-bg{
+				background-color: red;
+			}
 
-		.main-tx{
-			color: red;
-		}
+			.main-tx{
+				color: red;
+			}
 
-		.main-title{
-			font-family: serif;
-			font-size: 1.2em;
-			font-weight: bold;
-		}
+			.main-title{
+				font-family: serif;
+				font-size: 1.2em;
+				font-weight: bold;
+			}
 
-		.font-hand1{
-			font-family: 'Yellowtail', cursive;
-		}
+			.font-hand1{
+				font-family: 'Yellowtail', cursive;
+			}
 
-		.font-hand2{
-			font-family: 'Mr Dafoe', cursive;
-		}
+			.font-hand2{
+				font-family: 'Mr Dafoe', cursive;
+			}
 
-		#landing_header{
-			position: fixed;
-			top: 36px;
-			width: 100%;
-			text-align: center;
-		}
+			#landing_header{
+				position: fixed;
+				top: 36px;
+				width: 100%;
+				text-align: center;
+			}
 
-		#landing_footer{
-			position: fixed;
-			bottom: 24px;
-			width: 100%;
-			text-align: center;
-		}
+			#landing_footer{
+				position: fixed;
+				bottom: 24px;
+				width: 100%;
+				text-align: center;
+			}
 
-		.btn-language{
-			min-width: 150px;
-			padding: 10px 10px;
-			margin-left: 10%;
-			margin-right: 10%;
-			display: inline-block;
-		}
+			.btn-language{
+				min-width: 150px;
+				padding: 10px 10px;
+				margin-left: 10%;
+				margin-right: 10%;
+				display: inline-block;
+			}
 
-		a.btn-language:hover{
-			color: white;
-			text-decoration: none;
-		}
+			a.btn-language:hover{
+				color: white;
+				text-decoration: none;
+			}
 
-		.horizontal-line{
-			height: 1px;
-			width: 80%;
-			position: relative;
-			left: 10%;
-		}
-	</style>
-</head>
-<body>
+			.horizontal-line{
+				height: 1px;
+				width: 80%;
+				position: relative;
+				left: 10%;
+			}
+		</style>
+	</head>
+	<body>
 
-	<nav id="pr_navbar">
+		<nav id="pr_navbar">
 
-	</nav>
+		</nav>
 
-	<header id="landing_header">
-		<h1 class="main-tx main-title">Pensador Records</h1>
-	</header>
+		<header id="landing_header">
+			<h1 class="main-tx main-title">Pensador Records</h1>
+		</header>
 
-	<main>
-		<div id="canvas_thinker">
+		<main>
+			<div id="canvas_thinker">
 
-		</div>
-	</main>
+			</div>
+		</main>
 
-	<footer id="landing_footer">
-		<div class="horizontal-line main-bg"></div>
-		<div>
-			<a class="btn-language main-tx font-hand2" href="#">English</a>
-			<a class="btn-language main-tx font-hand2" href="#">Español</a>
-		</div>
-	</footer>
+		<footer id="landing_footer">
+			<div class="horizontal-line main-bg"></div>
+			<div>
+				<a class="btn-language main-tx font-hand2" href="#">English</a>
+				<a class="btn-language main-tx font-hand2" href="#">Español</a>
+			</div>
+		</footer>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="js/three.min.js"></script>
-	<script type="text/javascript" src="js/OrbitControls.js"></script>
-	<script type="text/javascript" src="js/OBJLoader.js"></script>
-	<script type="text/javascript" src="js/GLTFLoader.js"></script>
-	<script type="text/javascript" src="js/MTLLoader.js"></script>
-	<script type="text/javascript" src="js/inflate.min.js"></script>
-	<script type="text/javascript" src="js/FBXLoader.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-</body>
-<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'a2plcpnl0152'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script></html>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="js/three.min.js"></script>
+		<script type="text/javascript" src="js/OrbitControls.js"></script>
+		<script type="text/javascript" src="js/OBJLoader.js"></script>
+		<script type="text/javascript" src="js/GLTFLoader.js"></script>
+		<script type="text/javascript" src="js/MTLLoader.js"></script>
+		<script type="text/javascript" src="js/inflate.min.js"></script>
+		<script type="text/javascript" src="js/FBXLoader.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'a2plcpnl0152'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script>
+		<script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script></html>
+	</body>
+</html>
